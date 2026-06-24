@@ -31,6 +31,7 @@ from collections import OrderedDict
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data")
 FUND_FILE = os.path.join(DATA_DIR, "fundamentals.json")
 WATCHLIST_FILE = os.path.join(DATA_DIR, "watchlist.json")
+A_SHARE_FILE = os.path.join(DATA_DIR, "a_share_fundamentals.json")
 
 DEFAULT_WATCHLIST = {
     "us_ai_chip": ["NVDA", "AMD", "MU", "AVGO", "MRVL", "TSM"],
@@ -38,7 +39,11 @@ DEFAULT_WATCHLIST = {
     "us_ai_infra": ["ETN", "PWR", "VRT", "CRWV"],
     "us_crypto": ["COIN", "HOOD", "MSTR", "CRCL"],
     "hk_internet": ["0700.HK", "9888.HK", "1024.HK", "9992.HK"],
-    "a_share": [],  # A股需要不同数据源，后续扩展
+    "a_share": [
+        "002407.SZ", "600522.SH", "002837.SZ",
+        "601138.SH", "603986.SH", "002371.SZ",
+        "002384.SZ", "002463.SZ", "603650.SH",
+    ],
 }
 
 # ============================================================
@@ -78,8 +83,75 @@ def fetch_prices_curl(ticker, days=120):
 
 
 # ============================================================
-# 基本面数据管理
+# A 股数据获取（TuShare Pro）
 # ============================================================
+
+def is_a_share(ticker):
+    """判断是否为 A 股代码（含 .SZ 或 .SH）"""
+    return ".SZ" in ticker.upper() or ".SH" in ticker.upper()
+
+
+def _get_tushare_client():
+    """懒加载 TuShare 客户端"""
+    try:
+        from tushare_client import TuShareClient
+        return TuShareClient()
+    except Exception:
+        return None
+
+
+def fetch_prices_tushare(ticker, days=120):
+    """通过 TuShare 获取 A 股日线数据"""
+    client = _get_tushare_client()
+    if not client:
+        return None
+    try:
+        end_date = datetime.now().strftime("%Y%m%d")
+        start_date = (datetime.now() - timedelta(days=days)).strftime("%Y%m%d")
+        rows = client.get_daily(ticker, start_date, end_date)
+        if not rows or len(rows) < 60:
+            return None
+        # TuShare 返回按日期倒序，反转为正序
+        result = []
+        for r in reversed(rows):
+            result.append({
+                "date": r["trade_date"],
+                "close": r.get("close", 0),
+                "high": r.get("high", 0),
+                "volume": r.get("vol", 0),
+            })
+        return result
+    except Exception:
+        return None
+
+
+def fetch_a_share_valuation(ticker):
+    """获取 A 股估值数据（PE_TTM/PB/市值）"""
+    client = _get_tushare_client()
+    if not client:
+        return None
+    try:
+        rows = client.get_daily_basic(ticker)
+        if not rows:
+            return None
+        r = rows[0]
+        return {
+            "close": r.get("close"),
+            "pe_ttm": r.get("pe_ttm"),
+            "pb": r.get("pb"),
+            "total_mv": r.get("total_mv"),  # 万元
+            "trade_date": r.get("trade_date"),
+        }
+    except Exception:
+        return None
+
+
+def load_a_share_data():
+    """加载 TuShare 缓存数据"""
+    if os.path.exists(A_SHARE_FILE):
+        with open(A_SHARE_FILE) as f:
+            return json.load(f)
+    return {}
 
 def load_fundamentals():
     """加载基本面数据"""
@@ -281,11 +353,16 @@ def grade_signal(momentum, value):
 # ============================================================
 
 def scan_ticker(ticker, verbose=True):
-    """扫描单个标的"""
-    prices = fetch_prices_curl(ticker)
+    """扫描单个标的（自动识别 A 股/美股并使用对应数据源）"""
+    # A 股使用 TuShare，其他使用 Yahoo Finance
+    if is_a_share(ticker):
+        prices = fetch_prices_tushare(ticker)
+    else:
+        prices = fetch_prices_curl(ticker)
+
     if not prices:
         if verbose:
-            print(f"  {ticker:<8} ⚠️  无法获取价格数据")
+            print(f"  {ticker:<12} ⚠️  无法获取价格数据")
         return None
 
     momentum = check_momentum(prices)
@@ -301,6 +378,13 @@ def scan_ticker(ticker, verbose=True):
         "value": value,
     }
 
+    # A 股额外获取估值数据
+    valuation = None
+    if is_a_share(ticker):
+        valuation = fetch_a_share_valuation(ticker)
+        if valuation:
+            result["valuation"] = valuation
+
     if verbose:
         # 紧凑输出
         m = momentum
@@ -308,7 +392,13 @@ def scan_ticker(ticker, verbose=True):
         s = symbol.get(grade, "  ")
 
         if grade.startswith("BUY"):
-            print(f"  {s} {ticker:<8} ${m['close']:<8} 30日+{m['pct_30d']}% 放量{m['vol_ratio']}x  → {grade} {reason}")
+            print(f"  {s} {ticker:<12} {m['close']:<8} 30日+{m['pct_30d']}% 放量{m['vol_ratio']}x  → {grade} {reason}")
+            if valuation:
+                pe = valuation.get('pe_ttm')
+                mv = valuation.get('total_mv')
+                pe_str = f"PE(TTM)={pe:.1f}" if pe else "PE=N/A"
+                mv_str = f"市值={mv/10000:.0f}亿" if mv else ""
+                print(f"     估值: {pe_str}  {mv_str}  (TuShare {valuation.get('trade_date', '')})")
             if value:
                 v = value
                 checks_str = " ".join(f"{'✅' if val else '❌'}{k}" for k, val in v["checks"].items())
@@ -317,9 +407,13 @@ def scan_ticker(ticker, verbose=True):
                 if v["independent_pass"]:
                     print(f"     ★独立通过：{v['independent_reason']}")
         elif grade == "WATCH":
-            print(f"  {s} {ticker:<8} ${m['close']:<8} 30日+{m['pct_30d']}%  → 动量触发！需补充基本面数据")
+            print(f"  {s} {ticker:<12} {m['close']:<8} 30日+{m['pct_30d']}%  → 动量触发！需补充基本面数据")
+            if valuation:
+                pe = valuation.get('pe_ttm')
+                pe_str = f"PE(TTM)={pe:.1f}" if pe else "PE=N/A"
+                print(f"     估值: {pe_str}  (TuShare)")
         elif grade == "PASS":
-            print(f"  {s} {ticker:<8} ${m['close']:<8}  → {reason}")
+            print(f"  {s} {ticker:<12} {m['close']:<8}  → {reason}")
         # SKIP不输出
 
     return result

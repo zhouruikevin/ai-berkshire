@@ -22,12 +22,42 @@
 | 2（副） | **macrotrends**（ADR代码） | 腾讯用TCEHY，网易用NTES | 直接访问 |
 | 原始一手 | HKEX披露易 | hkexnews.hk | 年报PDF |
 
-### A股（三七互娱、吉比特等）
+### A股（多氟多、工业富联、兆易创新等）
 
 | 优先级 | 来源 | URL | 获取方式 |
-|--------|------|-----|---------|
-| 1（主） | **东方财富** | eastmoney.com → 搜股票代码 → 财务报表 | 直接访问 |
-| 2（副） | **巨潮资讯** | cninfo.com.cn | 原始年报/季报PDF |
+|--------|------|-----|--------|
+| 1（主） | **TuShare Pro** | API 调用 | `python3 tools/tushare_fetcher.py quote <代码>` 或 `update-all` |
+| 2（副） | **东方财富** | eastmoney.com → 搜股票代码 → 财务报表 | 直接访问（交叉验证用） |
+| 原始一手 | **巨潮资讯** | cninfo.com.cn | 原始年报/季报PDF |
+
+#### TuShare Pro 快速命令
+
+```bash
+# 估值快照（PE_TTM/PB/市值）
+python3 tools/tushare_fetcher.py quote 002407.SZ
+
+# 批量估值（watchlist 中所有 A 股）
+python3 tools/tushare_fetcher.py batch-quote
+
+# 财务指标（最近季度 EPS/ROE/毛利率）
+python3 tools/tushare_fetcher.py financials 002407.SZ
+
+# 利润表（营收/净利润）
+python3 tools/tushare_fetcher.py income 002407.SZ
+
+# 更新本地缓存（单只/全部）
+python3 tools/tushare_fetcher.py update 002407.SZ
+python3 tools/tushare_fetcher.py update-all
+```
+
+#### TuShare API 接口参考
+
+| 接口 | 用途 | 数据时效 |
+|------|------|--------|
+| `daily_basic` | PE(TTM)/PB/总市值/流通市值 | 当日收盘后更新 |
+| `daily` | 日线行情（开高低收量） | 当日收盘后更新 |
+| `fina_indicator` | 财务指标（EPS/ROE/毛利率等） | 财报发布后更新 |
+| `income` | 利润表（营收/净利润） | 财报发布后更新 |
 
 ---
 
@@ -108,11 +138,12 @@
 ## 快速索引
 
 | 场景 | 主要来源 | 备用来源 |
-|------|---------|---------|
+|------|---------|--------|
+| A 股（多氟多、工业富联等） | TuShare Pro API | 东方财富 |
+| 三七互娱 | TuShare Pro（002555.SZ） | eastmoney.com |
+| 吉比特 | TuShare Pro（603444.SH） | eastmoney.com |
 | PDD / 拼多多 | macrotrends.net/stocks/charts/PDD | stockanalysis.com/stocks/pdd |
 | 腾讯 | macrotrends.net/stocks/charts/TCEHY | aastocks（0700.HK） |
 | 网易 | macrotrends.net/stocks/charts/NTES | aastocks（9999.HK） |
-| 三七互娱 | eastmoney.com（002555） | cninfo.com.cn |
-| 吉比特 | eastmoney.com（603444） | cninfo.com.cn |
 | Nintendo | macrotrends.net/stocks/charts/NTDOY | stockanalysis.com/stocks/ntdoy |
 | Capcom | macrotrends（CCOEY） | stockanalysis（CCOEY） |
