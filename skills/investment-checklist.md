@@ -1,3 +1,8 @@
+---
+name: investment-checklist
+description: 巴菲特价值投资买入前Checklist。六关检查（能力圈、好生意、护城河、管理层、安全边际、纪律），判断是否值得买入。
+---
+
 # 巴菲特价值投资买入前 Checklist
 
 对 $ARGUMENTS 执行巴菲特价值投资买入前 Checklist 分析。

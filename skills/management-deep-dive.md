@@ -1,3 +1,8 @@
+---
+name: management-deep-dive
+description: 管理层纵深研究：买股票就是买人。分析CEO履历、决策记录、资本配置能力、公司治理。
+---
+
 # 管理层纵深研究：买股票就是买人
 
 对 $ARGUMENTS 进行管理层深度研究。

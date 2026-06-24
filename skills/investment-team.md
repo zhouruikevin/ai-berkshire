@@ -1,3 +1,8 @@
+---
+name: investment-team
+description: 投研团队：四角色并行分析框架。段永平/巴菲特/芒格/李录四视角多Agent并行分析公司。
+---
+
 # 投研团队：四角色并行分析框架
 
 对 $ARGUMENTS 进行团队化投资研究分析。使用 Team 工具创建真正的多Agent并行研究团队。

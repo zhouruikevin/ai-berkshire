@@ -1,3 +1,8 @@
+---
+name: private-company-research
+description: 未上市公司深度研究：多Agent并行。专为蚂蚁、小红书、SpaceX、Stripe等非上市公司设计。
+---
+
 # 未上市公司研究：多Agent并行深度研究框架
 
 对 $ARGUMENTS 进行团队化深度研究分析。专为蚂蚁集团、小红书、SpaceX、Stripe 等未上市公司设计。
