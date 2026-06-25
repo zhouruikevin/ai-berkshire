@@ -1,5 +1,99 @@
 #!/bin/bash
 #
+# setup-qoder.sh — 一键同步 Qoder 本地环境
+#
+# 将 git-tracked 的 skills/*.md 和 CLAUDE.md 同步到 .qoder/ 目录。
+# Qoder 不跟随软链接，因此使用 cp 拷贝方式。
+#
+# 用法：
+#   bash setup-qoder.sh          # 同步全部
+#   bash setup-qoder.sh --watch  # 监听变更自动同步（需 fswatch）
+#
+# 修改 skills/*.md 或 CLAUDE.md 后重新运行即可同步到 Qoder。
+#
+
+set -e
+
+PROJECT_ROOT="$(cd "$(dirname "$0")" && pwd)"
+cd "$PROJECT_ROOT"
+
+SKILLS=(
+  bottleneck-hunter deep-company-series dyp-ask earnings-review earnings-team
+  financial-data industry-funnel industry-research investment-checklist
+  investment-research investment-team management-deep-dive news-pulse
+  portfolio-review private-company-research quality-screen thesis-tracker
+  wechat-article
+)
+
+sync_skills() {
+  echo "📦 同步 Skills..."
+  for skill in "${SKILLS[@]}"; do
+    SOURCE="skills/$skill.md"
+    TARGET_DIR=".qoder/skills/$skill"
+    TARGET="$TARGET_DIR/SKILL.md"
+
+    if [ ! -f "$SOURCE" ]; then
+      echo "   ⚠️  $SOURCE 不存在，跳过"
+      continue
+    fi
+
+    mkdir -p "$TARGET_DIR"
+    # 删除旧的（可能是软链接或旧文件）
+    rm -f "$TARGET"
+    cp "$SOURCE" "$TARGET"
+    echo "   ✅ $skill"
+  done
+}
+
+sync_rules() {
+  echo "📋 同步 Rules..."
+  mkdir -p .qoder/rules
+  rm -f .qoder/rules/project-rules.md
+  cp CLAUDE.md .qoder/rules/project-rules.md
+  echo "   ✅ project-rules.md"
+}
+
+# ─── 主逻辑 ───
+
+if [ "$1" = "--watch" ]; then
+  # 监听模式
+  if ! command -v fswatch &> /dev/null; then
+    echo "❌ --watch 模式需要 fswatch，请运行: brew install fswatch"
+    exit 1
+  fi
+  echo "👀 监听模式启动（Ctrl+C 退出）"
+  echo "   修改 skills/*.md 或 CLAUDE.md 会自动同步到 .qoder/"
+  echo ""
+  # 初次同步
+  sync_skills
+  sync_rules
+  echo ""
+  # 监听变更
+  fswatch -o skills/ CLAUDE.md | while read; do
+    echo "$(date '+%H:%M:%S') 检测到变更，同步中..."
+    sync_skills
+    sync_rules
+    echo ""
+  done
+else
+  # 单次同步模式
+  echo "🔧 同步 Qoder 本地环境"
+  echo "   项目根目录: $PROJECT_ROOT"
+  echo ""
+  sync_skills
+  echo ""
+  sync_rules
+  echo ""
+  echo "🎉 完成！"
+  echo ""
+  echo "   维护方式："
+  echo "   - 编辑 skills/*.md 或 CLAUDE.md"
+  echo "   - 运行 bash setup-qoder.sh 同步到 Qoder"
+  echo "   - 或用 bash setup-qoder.sh --watch 自动同步"
+  echo "   - 新机器克隆后运行一次即可"
+fi
+#!/bin/bash
+#
 # setup-qoder.sh — 一键配置 Qoder 本地环境
 #
 # 将 git-tracked 的 skills/*.md 和 CLAUDE.md 通过软链接映射到 .qoder/ 目录，

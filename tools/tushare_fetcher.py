@@ -9,6 +9,8 @@ tushare_fetcher.py — A 股数据获取 CLI（基于 TuShare Pro）
     python3 tools/tushare_fetcher.py update 002407.SZ          # 更新单只
     python3 tools/tushare_fetcher.py update-all                # 批量更新 watchlist
     python3 tools/tushare_fetcher.py batch-quote               # 批量估值快照
+    python3 tools/tushare_fetcher.py pe 002407.SZ              # 多口径PE分析
+    python3 tools/tushare_fetcher.py pe-all                    # 批量多口径PE
 """
 
 import json
@@ -274,6 +276,148 @@ def _load_a_share_codes():
 
 
 # ------------------------------------------------------------------
+# 命令：pe — 多口径 PE 分析
+# ------------------------------------------------------------------
+
+def _compute_single_quarter_eps(fina_rows):
+    """
+    从 TuShare fina_indicator 累计 EPS 计算单季 EPS。
+    规则：Q1 直接用累计值，Q2/Q3/Q4 = 本期累计 - 上期累计。
+
+    Returns: list of (label, single_eps) 按时间正序
+    """
+    # 按 end_date 倒序
+    eps_map = {}
+    for r in fina_rows:
+        ed = r.get("end_date", "")
+        eps_map[ed] = r.get("eps", 0) or 0
+
+    dates = sorted(eps_map.keys(), reverse=True)
+    results = []
+
+    for d in dates:
+        y = d[:4]
+        m = d[4:6]
+        q_map = {"03": "Q1", "06": "Q2", "09": "Q3", "12": "Q4"}
+        q = q_map.get(m, m)
+        label = f"{y}{q}"
+
+        if m == "03":
+            # Q1：直接用累计值
+            single = eps_map[d]
+        else:
+            # Q2/Q3/Q4：找同年前一季度的累计值
+            prev_m = {"06": "03", "09": "06", "12": "09"}.get(m, "03")
+            prev_d = f"{y}{prev_m}01"[:-2] + prev_m + "01"  # 不好拼，直接算
+            # 更可靠：找日期排序中相邻的同一年的前一期
+            prev_d = None
+            for pd in dates:
+                if pd < d and pd[:4] == y:
+                    prev_d = pd
+                    break
+            if prev_d and prev_d in eps_map:
+                single = eps_map[d] - eps_map[prev_d]
+            else:
+                single = eps_map[d]
+
+        results.append((d, label, single))
+
+    return results
+
+
+def cmd_pe_analysis(client, ts_codes):
+    """多口径 PE 分析：TTM / 年化最近季度 / Forward"""
+    td = client.get_latest_trade_date()
+    print(f"\n{'=' * 78}")
+    print(f"  多口径 PE 分析  交易日: {td}")
+    print(f"{'=' * 78}")
+    print(f"  {'代码':<12} {'收盘':>8} {'PE(TTM)':>10} {'年化Q':>10} {'Forward':>10} {'Q增速':>8} {'季度':>6}")
+    print(f"  {'-' * 12} {'-' * 8} {'-' * 10} {'-' * 10} {'-' * 10} {'-' * 8} {'-' * 6}")
+
+    for code in ts_codes:
+        try:
+            # 估值
+            basic_rows = client.get_daily_basic(code, td)
+            if not basic_rows:
+                basic_rows = client.get_daily_basic(code)
+            if not basic_rows:
+                print(f"  {code:<12} {'无数据':>8}")
+                continue
+            b = basic_rows[0]
+            price = b.get("close", 0)
+            pe_ttm = b.get("pe_ttm")
+
+            # 财务指标
+            fina = client.get_fina_indicator(code, limit=10)
+            quarters = _compute_single_quarter_eps(fina)
+
+            if len(quarters) < 2 or not price:
+                pe_ttm_str = f"{pe_ttm:.1f}" if pe_ttm else "N/A"
+                print(f"  {code:<12} {price:>8.2f} {pe_ttm_str:>10} {'数据不足':>10}")
+                time.sleep(0.15)
+                continue
+
+            # quarters 按时间倒序，最新在前
+            latest_label = quarters[0][1]
+            latest_eps = quarters[0][2]   # 最新单季
+            prev_year_q = None
+
+            # 找去年同期：同季度、上一年
+            target_year = str(int(latest_label[:4]) - 1)
+            target_q = latest_label[4:]
+            for d, lbl, eps in quarters:
+                if lbl == f"{target_year}{target_q}":
+                    prev_year_q = eps
+                    break
+
+            # [1] PE(TTM)
+            pe_ttm_str = f"{pe_ttm:.1f}" if pe_ttm else "N/A"
+
+            # [2] 年化最近季度
+            if latest_eps and latest_eps > 0:
+                eps_ann = latest_eps * 4
+                pe_ann = price / eps_ann
+                pe_ann_str = f"{pe_ann:.1f}" if pe_ann < 999 else ">999"
+            else:
+                pe_ann_str = "N/A"
+
+            # [3] Forward PE（Q同比外推）
+            if prev_year_q and prev_year_q > 0 and latest_eps > 0:
+                yoy = latest_eps / prev_year_q
+                # 取去年全年EPS
+                annual_eps = None
+                for d, lbl, eps in quarters:
+                    if lbl.endswith("Q4"):
+                        # 累计Q4即为全年EPS，但我们需要用fina里的年报EPS
+                        # 直接找12月31日的数据
+                        pass
+                # 用单季度加总近似去年全年
+                year_target = target_year
+                last_year_quarters = [eps for d, lbl, eps in quarters if lbl.startswith(year_target)]
+                annual_eps = sum(last_year_quarters) if last_year_quarters else None
+
+                if annual_eps and annual_eps > 0:
+                    eps_fwd = annual_eps * yoy
+                    pe_fwd = price / eps_fwd
+                    pe_fwd_str = f"{pe_fwd:.1f}" if pe_fwd < 999 else ">999"
+                    yoy_str = f"+{(yoy - 1) * 100:.0f}%" if yoy >= 1 else f"{(yoy - 1) * 100:.0f}%"
+                else:
+                    pe_fwd_str = "N/A"
+                    yoy_str = "N/A"
+            else:
+                pe_fwd_str = "N/A"
+                yoy_str = "N/A"
+
+            print(f"  {code:<12} {price:>8.2f} {pe_ttm_str:>10} {pe_ann_str:>10} {pe_fwd_str:>10} {yoy_str:>8} {latest_label:>6}")
+
+        except Exception as e:
+            print(f"  {code:<12} ❌ {e}")
+        time.sleep(0.15)
+
+    print()
+
+
+# ------------------------------------------------------------------
 # 主程序
 # ------------------------------------------------------------------
 
@@ -327,6 +471,20 @@ def main():
 
     elif cmd == "batch-quote":
         cmd_batch_quote(client)
+
+    elif cmd == "pe":
+        codes = args[1:] if len(args) > 1 else _load_a_share_codes()
+        if not codes:
+            print("  用法: tushare_fetcher.py pe <ts_code> [ts_code2 ...]")
+            return
+        cmd_pe_analysis(client, codes)
+
+    elif cmd == "pe-all":
+        codes = _load_a_share_codes()
+        if not codes:
+            print("  ⚠️ watchlist.json 中 a_share 分组为空")
+            return
+        cmd_pe_analysis(client, codes)
 
     else:
         print(f"  未知命令: {cmd}")
