@@ -4,6 +4,7 @@ reports/美团/command-log.jsonl
 reports/.DS_Store
 .qoder/
 .idea/
+.playwright-mcp/
 
 # TuShare API 凭证
 .env
