@@ -91,21 +91,45 @@ reports/{公司名}/
 
 ## GitHub 操作
 
-- 本地克隆路径：`~/ai-berkshire/`
-- 远程仓库：`https://github.com/xbtlin/ai-berkshire.git`
-- 推送前先 `git pull --rebase origin main`（远程经常有新提交）
+### 远端配置（Fork 模式）
+
+| 远端名 | 地址 | 用途 |
+|--------|------|------|
+| `origin` | `git@github.com:zhouruikevin/ai-berkshire.git` | 个人 fork，日常推送目标 |
+| `upstream` | `git@github.com:xbtlin/ai-berkshire.git` | 原始仓库，同步上游更新 |
+
+- `main` 分支跟踪 `origin/main`
+- `git push` 默认推送到 `origin`（个人 fork）
+
+### 日常工作流
+
+- 本地克隆路径：`~/Documents/ai/ai-berkshire/`
+- 日常开发直接 `git pull` + `git push`（都是跟自己的 fork 交互）
 - commit message 用中文，描述清楚改了什么
 - 不要推送中间过程文件（如 data_collection.md），只推最终报告
+
+### 同步上游更新
+
+```bash
+git fetch upstream
+git merge upstream/main
+# 如有冲突，手动解决后继续
+git push   # 将上游更新同步到自己的 fork
+```
 
 ## 常用命令
 
 ```bash
-# 推送报告到GitHub
-cd ~/ai-berkshire
+# 日常推送到自己的 fork
+cd ~/Documents/ai/ai-berkshire
 git add reports/xxx.md
 git commit -m "添加xxx报告"
-git pull --rebase origin main
-git push origin main
+git push
+
+# 同步上游（不定期执行）
+git fetch upstream
+git merge upstream/main
+git push
 ```
 
 ## 注意事项
