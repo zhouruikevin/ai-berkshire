@@ -1,6 +1,6 @@
 ---
 name: wechat-article
-description: "AI Berkshire skill: 微信公众号文章：作者-编辑-读者三Agent协作. Source: skills/wechat-article.md."
+description: 微信公众号文章：作者-编辑-读者三Agent协作。产出可直接发布的深度公众号文章。
 ---
 
 ## Codex adapter note
@@ -9,7 +9,7 @@ This skill is generated from `skills/wechat-article.md` so Claude Code and Codex
 
 - Treat `$ARGUMENTS` as the user's request in the current Codex thread.
 - When the source mentions Claude-only surfaces such as Task, Agent, WebSearch, Bash, Read, or Write, use the closest Codex capability available in this session: subagents when available, web search when needed, shell commands for local tools, and normal file edits for workspace files.
-- Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
+- Use shared project tools from `tools/` in this repository. Tool commands use workspace-relative paths (`python3 tools/...`), so run them from the repo root.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
 # 微信公众号文章：作者-编辑-读者三Agent协作

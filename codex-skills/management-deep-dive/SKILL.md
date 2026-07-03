@@ -1,6 +1,6 @@
 ---
 name: management-deep-dive
-description: "AI Berkshire skill: 管理层纵深研究：买股票就是买人. Source: skills/management-deep-dive.md."
+description: 管理层纵深研究：买股票就是买人。分析CEO履历、决策记录、资本配置能力、公司治理。
 ---
 
 ## Codex adapter note
@@ -9,7 +9,7 @@ This skill is generated from `skills/management-deep-dive.md` so Claude Code and
 
 - Treat `$ARGUMENTS` as the user's request in the current Codex thread.
 - When the source mentions Claude-only surfaces such as Task, Agent, WebSearch, Bash, Read, or Write, use the closest Codex capability available in this session: subagents when available, web search when needed, shell commands for local tools, and normal file edits for workspace files.
-- Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
+- Use shared project tools from `tools/` in this repository. Tool commands use workspace-relative paths (`python3 tools/...`), so run them from the repo root.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
 # 管理层纵深研究：买股票就是买人
@@ -21,6 +21,10 @@ This skill is generated from `skills/management-deep-dive.md` so Claude Code and
 > "买股票就是买人。找到你信任的人，然后长期持有。" —— 段永平
 >
 > "评估管理层，要看他们在没人看着的时候做什么。" —— 巴菲特
+
+## 日期锚定
+
+当前日期为 `$CURRENT_DATE`。搜索管理层信息、持股变动、薪酬数据时query中必须包含当前年份，确保获取最新数据。
 
 ## 设计理念
 

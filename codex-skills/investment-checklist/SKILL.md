@@ -1,6 +1,6 @@
 ---
 name: investment-checklist
-description: "AI Berkshire skill: 巴菲特价值投资买入前 Checklist. Source: skills/investment-checklist.md."
+description: 巴菲特价值投资买入前Checklist。六关检查（能力圈、好生意、护城河、管理层、安全边际、纪律），判断是否值得买入。
 ---
 
 ## Codex adapter note
@@ -9,7 +9,7 @@ This skill is generated from `skills/investment-checklist.md` so Claude Code and
 
 - Treat `$ARGUMENTS` as the user's request in the current Codex thread.
 - When the source mentions Claude-only surfaces such as Task, Agent, WebSearch, Bash, Read, or Write, use the closest Codex capability available in this session: subagents when available, web search when needed, shell commands for local tools, and normal file edits for workspace files.
-- Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
+- Use shared project tools from `tools/` in this repository. Tool commands use workspace-relative paths (`python3 tools/...`), so run them from the repo root.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
 # 巴菲特价值投资买入前 Checklist
@@ -19,6 +19,10 @@ This skill is generated from `skills/investment-checklist.md` so Claude Code and
 **支持输入格式**：单个或多个公司，用逗号/顿号/空格分隔。例如：`腾讯, 茅台, 英伟达` 或 `NVDA AAPL MSFT`
 
 ## 执行流程
+
+### 日期锚定
+
+当前日期为 `$CURRENT_DATE`。所有财务数据必须来自截至今日已披露的最新财年/季度，股价取最近交易日。搜索query中必须包含当前年份。
 
 ### 第一步：解析输入，识别所有待分析公司
 
@@ -83,7 +87,7 @@ This skill is generated from `skills/investment-checklist.md` so Claude Code and
 用数据说话，**关键指标必须通过工具精确计算**：
 
 ```bash
-python3 ~/ai-berkshire/tools/financial_rigor.py verify-valuation \
+python3 tools/financial_rigor.py verify-valuation \
   --price {股价} --eps {EPS} --bvps {每股净资产} --fcf-per-share {每股FCF} --dividend {每股股息}
 ```
 
@@ -159,7 +163,7 @@ python3 ~/ai-berkshire/tools/financial_rigor.py verify-valuation \
 
 追加检验（**必须通过工具精确计算，禁止心算**）：
 ```bash
-python3 ~/ai-berkshire/tools/financial_rigor.py three-scenario \
+python3 tools/financial_rigor.py three-scenario \
   --price {股价} --eps {EPS} --shares {股本亿} \
   --growth {乐观} {中性} {悲观} --pe {乐观PE} {中性PE} {悲观PE} --currency {币种}
 ```

@@ -1,0 +1,9 @@
+schema_version: 1
+module_path: b955431b-3737-461e-aef2-b2b264d04e18/aed10141-1b24-4b73-8150-a79e93774a91/fb627ecd-b546-4a19-82e4-25b0caf0bf6f
+title: 投资研究数据与可视化资产库
+scope:
+    - data/
+    - assets/
+source_files: []
+depends_on: []
+related_to: []

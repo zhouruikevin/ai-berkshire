@@ -1,6 +1,6 @@
 ---
 name: deep-company-series
-description: "AI Berkshire skill: 深度公司系列：8 篇长文拆一家公司. Source: skills/deep-company-series.md."
+description: 深度公司系列：8篇长文拆一家公司。为公众号/视频号撰写公司深度分析系列，核心是事实核查标准。
 ---
 
 ## Codex adapter note
@@ -9,7 +9,7 @@ This skill is generated from `skills/deep-company-series.md` so Claude Code and 
 
 - Treat `$ARGUMENTS` as the user's request in the current Codex thread.
 - When the source mentions Claude-only surfaces such as Task, Agent, WebSearch, Bash, Read, or Write, use the closest Codex capability available in this session: subagents when available, web search when needed, shell commands for local tools, and normal file edits for workspace files.
-- Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
+- Use shared project tools from `tools/` in this repository. Tool commands use workspace-relative paths (`python3 tools/...`), so run them from the repo root.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
 # 深度公司系列：8 篇长文拆一家公司

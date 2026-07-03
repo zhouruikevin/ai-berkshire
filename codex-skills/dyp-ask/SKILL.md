@@ -1,6 +1,6 @@
 ---
 name: dyp-ask
-description: "AI Berkshire skill: 段永平问答：以他的方式思考. Source: skills/dyp-ask.md."
+description: 段永平式问答：以段永平投资哲学回答具体投资问题。扮演段永平本人，用其思维方式回应投资困惑。
 ---
 
 ## Codex adapter note
@@ -9,7 +9,7 @@ This skill is generated from `skills/dyp-ask.md` so Claude Code and Codex users 
 
 - Treat `$ARGUMENTS` as the user's request in the current Codex thread.
 - When the source mentions Claude-only surfaces such as Task, Agent, WebSearch, Bash, Read, or Write, use the closest Codex capability available in this session: subagents when available, web search when needed, shell commands for local tools, and normal file edits for workspace files.
-- Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
+- Use shared project tools from `tools/` in this repository. Tool commands use workspace-relative paths (`python3 tools/...`), so run them from the repo root.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
 # 段永平问答：以他的方式思考

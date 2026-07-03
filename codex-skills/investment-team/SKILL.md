@@ -1,6 +1,6 @@
 ---
 name: investment-team
-description: "AI Berkshire skill: 投研团队：四角色并行分析框架. Source: skills/investment-team.md."
+description: 投研团队：四角色并行分析框架。段永平/巴菲特/芒格/李录四视角多Agent并行分析公司。
 ---
 
 ## Codex adapter note
@@ -9,7 +9,7 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 
 - Treat `$ARGUMENTS` as the user's request in the current Codex thread.
 - When the source mentions Claude-only surfaces such as Task, Agent, WebSearch, Bash, Read, or Write, use the closest Codex capability available in this session: subagents when available, web search when needed, shell commands for local tools, and normal file edits for workspace files.
-- Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
+- Use shared project tools from `tools/` in this repository. Tool commands use workspace-relative paths (`python3 tools/...`), so run them from the repo root.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
 # 投研团队：四角色并行分析框架
@@ -45,6 +45,12 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 
 将评级结果告知每个Agent，影响其研究方式。
 
+### 日期锚定（强制执行）
+
+当前日期为 `$CURRENT_DATE`。**每个Agent的任务描述中必须包含以下指令**：
+
+> 研究日期：`$CURRENT_DATE`。所有数据必须是截至此日期的最新可得数据。"最近财年"=截至今日已披露的最近完整财年，"近5年"从最近完整财年往回推。搜索query中必须包含当前年份。股价/市值取最近交易日数据并标注日期。
+
 ### 第二步：创建团队
 
 使用 TeamCreate 创建团队：
@@ -76,10 +82,10 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
   5. 估值分析：PE/PS/PB/EV等，与历史及同业对比
   6. 安全边际评估：内在价值 vs 当前股价
   7. **金融严谨性验证（必须使用Bash调用工具，禁止心算）**：
-     - 市值验算：`python3 ~/ai-berkshire/tools/financial_rigor.py verify-market-cap --price {价格} --shares {股本} --reported {报告市值} --currency {币种}`
-     - 估值验算：`python3 ~/ai-berkshire/tools/financial_rigor.py verify-valuation --price {价格} --eps {EPS} --bvps {每股净资产}`
-     - 关键数据交叉验证：`python3 ~/ai-berkshire/tools/financial_rigor.py cross-validate --field {字段} --values '{JSON}' --unit {单位}`
-     - 三情景估值：`python3 ~/ai-berkshire/tools/financial_rigor.py three-scenario --price {价格} --eps {EPS} --shares {股本亿} --growth {乐观} {中性} {悲观} --pe {乐观PE} {中性PE} {悲观PE}`
+     - 市值验算：`python3 tools/financial_rigor.py verify-market-cap --price {价格} --shares {股本} --reported {报告市值} --currency {币种}`
+     - 估值验算：`python3 tools/financial_rigor.py verify-valuation --price {价格} --eps {EPS} --bvps {每股净资产}`
+     - 关键数据交叉验证：`python3 tools/financial_rigor.py cross-validate --field {字段} --values '{JSON}' --unit {单位}`
+     - 三情景估值：`python3 tools/financial_rigor.py three-scenario --price {价格} --eps {EPS} --shares {股本亿} --growth {乐观} {中性} {悲观} --pe {乐观PE} {中性PE} {悲观PE}`
      - 将工具输出结果直接嵌入报告中作为验证记录
 
 #### 任务3：行业与竞争分析
@@ -198,13 +204,13 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 
 ```bash
 # Step 1 — 提取抽检清单（15%随机抽样）
-python3 ~/ai-berkshire/tools/report_audit.py extract \
+python3 tools/report_audit.py extract \
   --report <报告文件路径>
 
 # Step 2 — 对清单每项从可靠信源取数（参见 skills/financial-data.md）
 
 # Step 3 — 输出准出/打回判决
-python3 ~/ai-berkshire/tools/report_audit.py verdict \
+python3 tools/report_audit.py verdict \
   --results '<填好的JSON>' \
   --report <报告文件名>
 ```

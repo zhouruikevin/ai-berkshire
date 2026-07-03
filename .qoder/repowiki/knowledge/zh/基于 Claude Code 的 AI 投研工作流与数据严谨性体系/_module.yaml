@@ -1,0 +1,15 @@
+schema_version: 1
+module_path: build_system
+title: 基于 Claude Code 的 AI 投研工作流与数据严谨性体系
+scope: []
+source_files:
+    - CLAUDE.md
+    - README.md
+    - ai_CLAUDE.md
+    - tools/financial_rigor.py
+    - tools/log-command.sh
+    - tools/stock_screener.py
+    - skills/investment-team.md
+    - skills/investment-research.md
+depends_on: []
+related_to: []

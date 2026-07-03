@@ -1,6 +1,6 @@
 ---
 name: investment-research
-description: "AI Berkshire skill: 投资研究：巴菲特-芒格-段永平-李录 四大师综合分析框架. Source: skills/investment-research.md."
+description: 系统化投资研究：巴菲特-芒格-段永平-李录四大师综合分析。对目标公司进行商业模式、财务、估值、行业竞争的系统研究。
 ---
 
 ## Codex adapter note
@@ -9,7 +9,7 @@ This skill is generated from `skills/investment-research.md` so Claude Code and 
 
 - Treat `$ARGUMENTS` as the user's request in the current Codex thread.
 - When the source mentions Claude-only surfaces such as Task, Agent, WebSearch, Bash, Read, or Write, use the closest Codex capability available in this session: subagents when available, web search when needed, shell commands for local tools, and normal file edits for workspace files.
-- Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
+- Use shared project tools from `tools/` in this repository. Tool commands use workspace-relative paths (`python3 tools/...`), so run them from the repo root.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
 # 投资研究：巴菲特-芒格-段永平-李录 四大师综合分析框架
@@ -48,6 +48,14 @@ This skill is generated from `skills/investment-research.md` so Claude Code and 
 
 ### 第一步：数据收集
 
+> **日期锚定（强制执行）**：当前日期为 `$CURRENT_DATE`。所有数据请求必须基于此日期：
+> - "最近财年"= 截至今日已披露的最近一个完整财年年报（如今天是2026年6月，多数公司2025年报已披露，则"最近财年"=2025）
+> - "最近季度"= 截至今日已披露的最近一个季度报告
+> - "近5年"= 从最近完整财年往回推5年（如最近财年2025，则取2021-2025）
+> - 股价/市值 = 最近一个交易日收盘价，必须标注具体日期
+> - **搜索query中必须包含当前年份**（如搜 "Microsoft revenue 2026"、"腾讯 2025年报"，而非不带年份的泛搜索）
+> - 每个数据收集Agent的prompt中必须包含：`研究日期：{当前日期}。所有数据必须是截至此日期的最新可得数据。`
+
 > **数据源规范**：参见 `skills/financial-data.md`。所有财务数据必须来自两个独立来源，误差>1%须标记。
 > - 美股：macrotrends（主）+ stockanalysis（副）
 > - 港股：aastocks（主）+ macrotrends ADR（副）
@@ -55,8 +63,8 @@ This skill is generated from `skills/investment-research.md` so Claude Code and 
 
 使用 Task 工具启动后台 Agent，从网络收集以下数据：
 
-1. 收入结构：最近财年及近4季度分部收入、增速、毛利率
-2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备
+1. 收入结构：最近已披露财年及最近4个已披露季度的分部收入、增速、毛利率
+2. 财务指标：近5个已披露财年的收入、净利润、毛利率、经营利润率、自由现金流、现金储备
 3. 竞争格局：市场份额、主要竞争对手对比
 4. 商业模式与护城河：核心竞争优势来源
 5. 技术能力：核心技术栈、研发投入
@@ -81,20 +89,20 @@ This skill is generated from `skills/investment-research.md` so Claude Code and 
 
 Step 1 — 市值验算（精确十进制，非浮点）：
 ```bash
-python3 ~/ai-berkshire/tools/financial_rigor.py verify-market-cap \
+python3 tools/financial_rigor.py verify-market-cap \
   --price {股价} --shares {总股本} --reported {报告市值} --currency {币种}
 ```
 
 Step 2 — 关键数据多源交叉验证：
 ```bash
-python3 ~/ai-berkshire/tools/financial_rigor.py cross-validate \
+python3 tools/financial_rigor.py cross-validate \
   --field {字段名} --values '{"来源1": 数值, "来源2": 数值}' --unit {单位}
 ```
 对收入、净利润、现金储备分别执行。
 
 Step 3 — 估值指标精确验算（PE/PB/ROE/FCF Yield 等）：
 ```bash
-python3 ~/ai-berkshire/tools/financial_rigor.py verify-valuation \
+python3 tools/financial_rigor.py verify-valuation \
   --price {股价} --eps {EPS} --bvps {每股净资产} --fcf-per-share {每股FCF} --dividend {每股股息}
 ```
 
@@ -122,6 +130,33 @@ python3 ~/ai-berkshire/tools/financial_rigor.py verify-valuation \
 - 毛利率水平与同行对比，解释为什么高/低
 - 经营杠杆分析
 - **段永平式追问**：这门生意好在哪？如果只能用一句话描述，是什么？
+
+#### 收入漏斗分析（必须执行）
+
+**每家公司都必须画出从"总业务量"到"自由现金流"的完整漏斗**，逐层标注金额、比率和具体去向。目的是回答：钱从哪里来，每一层漏给了谁，最终留下了多少。
+
+模板（根据公司类型调整顶层指标）：
+
+```
+[顶层业务量指标]（如：TPV/GMV/订阅用户数×ARPU/产能×售价）
+    │ × 抽成率/货币化率/收入转化率
+[营收]
+    │ - 直接成本（逐项列明：付给谁、大致金额）
+[毛利 / 交易利润额]
+    │ - 运营费用（研发/销售/管理，逐项列明）
+[营业利润]
+    │ - 税+利息
+[净利润]
+    │ + 非现金项目（折旧/摊销/股权激励）- 资本支出
+[自由现金流]
+```
+
+**关键要求：**
+1. 顶层指标因行业不同而不同：支付公司用TPV，电商用GMV，SaaS用用户数×ARPU，白酒用产能×吨价，广告公司用广告展示量×CPM
+2. 每一层的"漏损"必须标注具体去向（付给了谁、为什么付），不能只写一个笼统的百分比
+3. 如果公司有多条业务线且抽成率/利润率差异大，必须分业务线画漏斗，再标注加权平均
+4. 漏斗最终转化率（自由现金流/顶层业务量）是衡量生意质量的核心指标
+5. 与同行对比每一层的转化率，找出差异最大的环节——那就是这家公司最核心的竞争优劣势所在
 
 ### 第三步：护城河评估 — 巴菲特"经济护城河"
 
@@ -176,7 +211,7 @@ python3 ~/ai-berkshire/tools/financial_rigor.py verify-valuation \
 - 反向DCF：当前股价隐含了什么增长预期？
 - 三情景估值 —— **必须通过工具精确计算，禁止心算**：
 ```bash
-python3 ~/ai-berkshire/tools/financial_rigor.py three-scenario \
+python3 tools/financial_rigor.py three-scenario \
   --price {股价} --eps {EPS} --shares {总股本亿} \
   --growth {乐观增速} {中性增速} {悲观增速} \
   --pe {乐观PE} {中性PE} {悲观PE} --years 3 --currency {币种}
@@ -228,7 +263,7 @@ python3 ~/ai-berkshire/tools/financial_rigor.py three-scenario \
 
 **Step 1 — 提取抽检清单（15%随机抽样）：**
 ```bash
-python3 ~/ai-berkshire/tools/report_audit.py extract \
+python3 tools/report_audit.py extract \
   --report <报告文件路径>
 ```
 输出 JSON 模板，每项含 `fetched_value`（待填）。
@@ -240,7 +275,7 @@ python3 ~/ai-berkshire/tools/report_audit.py extract \
 
 **Step 3 — 输出判决：**
 ```bash
-python3 ~/ai-berkshire/tools/report_audit.py verdict \
+python3 tools/report_audit.py verdict \
   --results '<填好的JSON>' \
   --report <报告文件名>
 ```

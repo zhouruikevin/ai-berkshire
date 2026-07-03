@@ -1,6 +1,6 @@
 ---
 name: private-company-research
-description: "AI Berkshire skill: 未上市公司研究：多Agent并行深度研究框架. Source: skills/private-company-research.md."
+description: 未上市公司深度研究：多Agent并行。专为蚂蚁、小红书、SpaceX、Stripe等非上市公司设计。
 ---
 
 ## Codex adapter note
@@ -9,7 +9,7 @@ This skill is generated from `skills/private-company-research.md` so Claude Code
 
 - Treat `$ARGUMENTS` as the user's request in the current Codex thread.
 - When the source mentions Claude-only surfaces such as Task, Agent, WebSearch, Bash, Read, or Write, use the closest Codex capability available in this session: subagents when available, web search when needed, shell commands for local tools, and normal file edits for workspace files.
-- Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
+- Use shared project tools from `tools/` in this repository. Tool commands use workspace-relative paths (`python3 tools/...`), so run them from the repo root.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
 # 未上市公司研究：多Agent并行深度研究框架
@@ -25,6 +25,10 @@ This skill is generated from `skills/private-company-research.md` so Claude Code
 - **估值锚定少**：依赖融资轮次、可比公司法、情景推演
 - **信息不对称大**：需要更多"拼图式"研究方法
 - **退出路径不确定**：IPO/并购/二级转让均有可能
+
+## 日期锚定
+
+当前日期为 `$CURRENT_DATE`。所有数据搜索和引用必须基于此日期，搜索query中必须包含当前年份。融资轮次、估值、收入数据须标注数据截至时间。
 
 ## AI研究偏见自觉（本框架的核心前提）
 

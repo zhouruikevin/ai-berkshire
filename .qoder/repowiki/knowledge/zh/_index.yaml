@@ -1,0 +1,173 @@
+# 知识卡导出索引文件
+schema_version: 1
+locale: zh-CN
+branch: main
+nodes_managed: true
+exported_at: "2026-06-24T04:16:16Z"
+modules:
+    "":
+        dir_name: ai-berkshire
+        title: ai-berkshire
+        scope: []
+        source_files: []
+        children:
+            - b955431b-3737-461e-aef2-b2b264d04e18
+        depends_on: []
+        related_to: []
+    b955431b-3737-461e-aef2-b2b264d04e18:
+        dir_name: 深度价值投资研究与供应链瓶颈追踪
+        title: 深度价值投资研究与供应链瓶颈追踪
+        scope:
+            - reports/
+        source_files: []
+        children:
+            - b955431b-3737-461e-aef2-b2b264d04e18/aed10141-1b24-4b73-8150-a79e93774a91
+        depends_on: []
+        related_to: []
+    b955431b-3737-461e-aef2-b2b264d04e18/aed10141-1b24-4b73-8150-a79e93774a91:
+        dir_name: AI 驱动的价值投资研究框架
+        title: AI 驱动的价值投资研究框架
+        scope:
+            - .gitignore
+            - CLAUDE.md
+            - LICENSE
+            - README.md
+            - ai_CLAUDE.md
+        source_files: []
+        children:
+            - b955431b-3737-461e-aef2-b2b264d04e18/aed10141-1b24-4b73-8150-a79e93774a91/0dc8fc5c-2fbc-40b4-8063-18c6f06c64fd
+            - b955431b-3737-461e-aef2-b2b264d04e18/aed10141-1b24-4b73-8150-a79e93774a91/923327f9-3201-46e8-b8b7-937575eca48b
+            - b955431b-3737-461e-aef2-b2b264d04e18/aed10141-1b24-4b73-8150-a79e93774a91/fb627ecd-b546-4a19-82e4-25b0caf0bf6f
+        depends_on: []
+        related_to: []
+    b955431b-3737-461e-aef2-b2b264d04e18/aed10141-1b24-4b73-8150-a79e93774a91/0dc8fc5c-2fbc-40b4-8063-18c6f06c64fd:
+        dir_name: 股票去劣筛选与实盘记录
+        title: 股票去劣筛选与实盘记录
+        scope:
+            - 实盘记录/
+            - 筛选公司/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to: []
+    b955431b-3737-461e-aef2-b2b264d04e18/aed10141-1b24-4b73-8150-a79e93774a91/923327f9-3201-46e8-b8b7-937575eca48b:
+        dir_name: AI 驱动的价值投资研究与决策系统
+        title: AI 驱动的价值投资研究与决策系统
+        scope: []
+        source_files: []
+        children:
+            - b955431b-3737-461e-aef2-b2b264d04e18/aed10141-1b24-4b73-8150-a79e93774a91/923327f9-3201-46e8-b8b7-937575eca48b/62a5a583-15f8-40f4-85ef-8767250ed5be
+            - b955431b-3737-461e-aef2-b2b264d04e18/aed10141-1b24-4b73-8150-a79e93774a91/923327f9-3201-46e8-b8b7-937575eca48b/65dd5bd2-e80b-4834-8da8-e70525b5735a
+        depends_on: []
+        related_to: []
+    ? b955431b-3737-461e-aef2-b2b264d04e18/aed10141-1b24-4b73-8150-a79e93774a91/923327f9-3201-46e8-b8b7-937575eca48b/62a5a583-15f8-40f4-85ef-8767250ed5be
+    :   dir_name: 量化投资与数据验证工具集
+        title: 量化投资与数据验证工具集
+        scope:
+            - tools/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to: []
+    ? b955431b-3737-461e-aef2-b2b264d04e18/aed10141-1b24-4b73-8150-a79e93774a91/923327f9-3201-46e8-b8b7-937575eca48b/65dd5bd2-e80b-4834-8da8-e70525b5735a
+    :   dir_name: 供应链瓶颈猎手与套利机会挖掘
+        title: 供应链瓶颈猎手与套利机会挖掘
+        scope:
+            - skills/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to: []
+    b955431b-3737-461e-aef2-b2b264d04e18/aed10141-1b24-4b73-8150-a79e93774a91/fb627ecd-b546-4a19-82e4-25b0caf0bf6f:
+        dir_name: 投资研究数据与可视化资产库
+        title: 投资研究数据与可视化资产库
+        scope:
+            - data/
+            - assets/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to: []
+    build_system:
+        dir_name: 基于 Claude Code 的 AI 投研工作流与数据严谨性体系
+        title: 基于 Claude Code 的 AI 投研工作流与数据严谨性体系
+        scope: []
+        source_files:
+            - CLAUDE.md
+            - README.md
+            - ai_CLAUDE.md
+            - tools/financial_rigor.py
+            - tools/log-command.sh
+            - tools/stock_screener.py
+            - skills/investment-team.md
+            - skills/investment-research.md
+        children: []
+        depends_on: []
+        related_to: []
+    configuration_system:
+        dir_name: 配置系统：基于文件与工具链的投研数据管理
+        title: 配置系统：基于文件与工具链的投研数据管理
+        scope: []
+        source_files:
+            - data/watchlist.json
+            - data/fundamentals.json
+            - tools/financial_rigor.py
+            - tools/stock_screener.py
+            - tools/morningstar_fair_value.py
+            - tools/xueqiu_scraper.py
+            - CLAUDE.md
+            - ai_CLAUDE.md
+        children: []
+        depends_on: []
+        related_to: []
+    dependency_management:
+        dir_name: 零依赖脚本化数据工具链
+        title: 零依赖脚本化数据工具链
+        scope: []
+        source_files:
+            - tools/financial_rigor.py
+            - tools/xueqiu_scraper.py
+            - .gitignore
+            - CLAUDE.md
+        children: []
+        depends_on: []
+        related_to: []
+    error_handling:
+        dir_name: 金融数据严谨性校验与研报准出机制
+        title: 金融数据严谨性校验与研报准出机制
+        scope: []
+        source_files:
+            - tools/financial_rigor.py
+            - tools/report_audit.py
+            - tools/stock_screener.py
+            - tools/xueqiu_scraper.py
+            - tools/momentum_backtest.py
+            - CLAUDE.md
+        children: []
+        depends_on: []
+        related_to: []
+    frontend_style:
+        dir_name: 基于 Markdown 与 AI Agent 协作的投研内容生产体系
+        title: 基于 Markdown 与 AI Agent 协作的投研内容生产体系
+        scope: []
+        source_files:
+            - skills/deep-company-series.md
+            - skills/wechat-article.md
+            - skills/earnings-team.md
+            - skills/investment-team.md
+            - CLAUDE.md
+            - assets/architecture.mmd
+        children: []
+        depends_on: []
+        related_to: []
+    logging_system:
+        dir_name: 日志系统现状：基于 CLI 的指令追踪与基础输出
+        title: 日志系统现状：基于 CLI 的指令追踪与基础输出
+        scope: []
+        source_files:
+            - tools/log-command.sh
+            - logs/.gitignore
+            - tools/financial_rigor.py
+        children: []
+        depends_on: []
+        related_to: []

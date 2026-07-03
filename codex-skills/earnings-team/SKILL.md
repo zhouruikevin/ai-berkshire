@@ -1,6 +1,6 @@
 ---
 name: earnings-team
-description: "AI Berkshire skill: 财报精读团队：四大师并行解读 + 公众号发布. Source: skills/earnings-team.md."
+description: 团队化财报精读：四大师并行解读+公众号发布。四位大师并行解读财报，编辑润色成文，读者评审把关。
 ---
 
 ## Codex adapter note
@@ -9,14 +9,14 @@ This skill is generated from `skills/earnings-team.md` so Claude Code and Codex 
 
 - Treat `$ARGUMENTS` as the user's request in the current Codex thread.
 - When the source mentions Claude-only surfaces such as Task, Agent, WebSearch, Bash, Read, or Write, use the closest Codex capability available in this session: subagents when available, web search when needed, shell commands for local tools, and normal file edits for workspace files.
-- Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
+- Use shared project tools from `tools/` in this repository. Tool commands use workspace-relative paths (`python3 tools/...`), so run them from the repo root.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
 # 财报精读团队：四大师并行解读 + 公众号发布
 
 对 $ARGUMENTS 进行团队化财报精读分析。四位大师并行解读财报，编辑润色成文，读者评审把关质量，最终产出可直接发布的公众号文章。
 
-**支持输入格式**：`公司名 季度`，例如：`腾讯 2025Q4`、`PDD 2025年报`、`美团 最新`
+**支持输入格式**：`公司名 季度`，例如：`腾讯 最新`（推荐，自动匹配截至 `$CURRENT_DATE` 已披露的最近一期）、`PDD 2025年报`、`美团 2025Q4`
 
 ## 设计理念
 
@@ -122,7 +122,7 @@ This skill is generated from `skills/earnings-team.md` so Claude Code and Codex 
    - 关键数据至少两个来源交叉验证
 
    ```bash
-   python3 ~/ai-berkshire/tools/financial_rigor.py cross-validate \
+   python3 tools/financial_rigor.py cross-validate \
      --metric "revenue" --values {值1} {值2} --sources "来源1" "来源2"
    ```
 
@@ -147,11 +147,11 @@ This skill is generated from `skills/earnings-team.md` so Claude Code and Codex 
 5. **估值与安全边际更新**
 
    ```bash
-   python3 ~/ai-berkshire/tools/financial_rigor.py verify-market-cap \
+   python3 tools/financial_rigor.py verify-market-cap \
      --price {价格} --shares {股本} --reported {报告市值} --currency {币种}
-   python3 ~/ai-berkshire/tools/financial_rigor.py verify-valuation \
+   python3 tools/financial_rigor.py verify-valuation \
      --price {价格} --eps {EPS} --bvps {每股净资产}
-   python3 ~/ai-berkshire/tools/financial_rigor.py three-scenario \
+   python3 tools/financial_rigor.py three-scenario \
      --price {价格} --eps {EPS} --shares {股本亿} \
      --growth {乐观} {中性} {悲观} --pe {乐观PE} {中性PE} {悲观PE}
    ```
@@ -310,6 +310,7 @@ This skill is generated from `skills/earnings-team.md` so Claude Code and Codex 
 - 保留所有关键数据和结论，不降低专业深度
 - 改善表达方式，让非专业投资者也能跟上逻辑
 - 不是"科普化"，是"让专业内容读起来不累"
+- **写成真人风格，杜绝AI腔调**——读起来像一个投资者在跟你聊他的判断，不像一份机器生成的报告
 
 **具体任务**：
 
@@ -325,11 +326,15 @@ This skill is generated from `skills/earnings-team.md` so Claude Code and Codex 
    - 表格保留但精简，大段分析改为要点式
    - 每500字左右插入一个"阶段性小结"，帮读者消化
 
-3. **表达润色**
-   - 把生硬的财务术语用类比/场景解释："经营现金流比净利润低30%"→"赚了100块但口袋里只摸到70块"
-   - 四大师的点评语录是文章的灵魂——确保每条都读起来犀利、有记忆点
+3. **真人风格写作（最重要）**
+   - 禁止密集加粗——一段话里最多加粗一处，多了就是AI味
+   - 禁止平行结构——"理由1/理由2/理由3"、"维度1/维度2"、"第一/第二/第三"这种排比是AI最典型的特征，用自然段落代替
+   - 禁止套话——"本质上是"、"综上所述"、"总而言之"、"值得注意的是"、"需要指出的是"全部删掉
+   - 用口语化的短句，像在跟朋友聊天："这个数字说明什么？说明主站还是一台印钞机。"
+   - 类比要自然——"赚了100块但口袋里只摸到70块"这种好；"犹如一把双刃剑"这种是废话
+   - 允许有态度和判断，不要面面俱到地对冲每一句话
    - 段落不超过4行，句子不超过30字
-   - 适度使用对比和反差制造阅读节奏
+   - 四大师的点评语录要犀利、有记忆点，但不要每段都挂引号
 
 4. **读者价值检测**
    - 每个章节自问：读者读完这段，能做什么决策？如果答案是"什么都做不了"，要么改写要么删除
@@ -339,6 +344,12 @@ This skill is generated from `skills/earnings-team.md` so Claude Code and Codex 
    - 微信公众号排版友好：短段落、小标题清晰、表格简洁
    - 加入适当的分隔线和引用格式
    - 文章长度控制在1000-3000字（太长读者会跳出）
+
+6. **禁止出现的内容**
+   - 不要加"系列回顾"表格——读者不需要被提醒前几篇写了什么
+   - 不要加"致谢"段落——公众号文章不是论文
+   - 不要在文末罗列数据来源清单——关键数据在正文中标注来源即可
+   - 不要加"免责声明"以外的收尾套话（"感谢阅读"、"欢迎关注"等）
 
 **输出**：改写后的完整公众号文章。
 
@@ -428,10 +439,10 @@ reports/{公司名}/
 对最终文章执行抽检：
 
 ```bash
-python3 ~/ai-berkshire/tools/report_audit.py extract \
+python3 tools/report_audit.py extract \
   --report reports/{公司名}/{公司名}-earnings-{期间}.md
 
-python3 ~/ai-berkshire/tools/report_audit.py verdict \
+python3 tools/report_audit.py verdict \
   --results '<填好的JSON>' \
   --report {报告文件名}
 ```
@@ -456,3 +467,4 @@ python3 ~/ai-berkshire/tools/report_audit.py verdict \
 - **编辑不是降低专业度**：是让专业内容更易读，不是变成科普
 - **读者评审不是走过场**：真的站在读者角度挑毛病
 - **数据准确性**：关键数据交叉验证，使用 financial_rigor.py 工具验算
+- **严格检验数据和消息来源**：文章中引用的每一个数字必须能追溯到一手来源（财报原文、SEC filing、交易所公告）。从新闻报道或第三方网站获取的数据必须回到原始来源核实，不能直接采信。发现来源间有矛盾时，以公司官方披露为准并注明差异。任何无法验证的数据点不得写入最终文章

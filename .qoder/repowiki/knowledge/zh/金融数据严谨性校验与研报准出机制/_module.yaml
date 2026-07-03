@@ -1,0 +1,13 @@
+schema_version: 1
+module_path: error_handling
+title: 金融数据严谨性校验与研报准出机制
+scope: []
+source_files:
+    - tools/financial_rigor.py
+    - tools/report_audit.py
+    - tools/stock_screener.py
+    - tools/xueqiu_scraper.py
+    - tools/momentum_backtest.py
+    - CLAUDE.md
+depends_on: []
+related_to: []

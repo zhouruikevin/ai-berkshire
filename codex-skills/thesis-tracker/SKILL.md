@@ -1,6 +1,6 @@
 ---
 name: thesis-tracker
-description: "AI Berkshire skill: 投资论文追踪：买入后的纪律系统. Source: skills/thesis-tracker.md."
+description: 投资论文追踪：买入后的纪律系统。长期跟踪投资论点是否仍成立、关键假设是否被证伪。
 ---
 
 ## Codex adapter note
@@ -9,7 +9,7 @@ This skill is generated from `skills/thesis-tracker.md` so Claude Code and Codex
 
 - Treat `$ARGUMENTS` as the user's request in the current Codex thread.
 - When the source mentions Claude-only surfaces such as Task, Agent, WebSearch, Bash, Read, or Write, use the closest Codex capability available in this session: subagents when available, web search when needed, shell commands for local tools, and normal file edits for workspace files.
-- Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
+- Use shared project tools from `tools/` in this repository. Tool commands use workspace-relative paths (`python3 tools/...`), so run them from the repo root.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
 # 投资论文追踪：买入后的纪律系统
@@ -24,6 +24,10 @@ This skill is generated from `skills/thesis-tracker.md` so Claude Code and Codex
 > "买入只是开始。真正的工作是持有期间的持续跟踪。" —— 李录
 >
 > "当事实改变时，我就改变想法。你呢？" —— 凯恩斯
+
+## 日期锚定
+
+当前日期为 `$CURRENT_DATE`。追踪检查必须基于截至今日已披露的最新财报和事件，搜索query中必须包含当前年份。
 
 ## 设计理念
 

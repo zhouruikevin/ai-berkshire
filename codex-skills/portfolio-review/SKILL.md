@@ -1,6 +1,6 @@
 ---
 name: portfolio-review
-description: "AI Berkshire skill: 组合管理：从\"研究公司\"到\"管理组合\". Source: skills/portfolio-review.md."
+description: 组合管理：从研究公司到管理组合。检视持仓结构、集中度、风险敞口，优化投资组合。
 ---
 
 ## Codex adapter note
@@ -9,7 +9,7 @@ This skill is generated from `skills/portfolio-review.md` so Claude Code and Cod
 
 - Treat `$ARGUMENTS` as the user's request in the current Codex thread.
 - When the source mentions Claude-only surfaces such as Task, Agent, WebSearch, Bash, Read, or Write, use the closest Codex capability available in this session: subagents when available, web search when needed, shell commands for local tools, and normal file edits for workspace files.
-- Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
+- Use shared project tools from `tools/` in this repository. Tool commands use workspace-relative paths (`python3 tools/...`), so run them from the repo root.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
 # 组合管理：从"研究公司"到"管理组合"
@@ -24,6 +24,10 @@ This skill is generated from `skills/portfolio-review.md` so Claude Code and Cod
 > "分散投资是对无知的保护。如果你知道自己在做什么，分散投资就没有意义。" —— 巴菲特
 >
 > "我这辈子见过的真正好的投资机会，十个手指就数得完。" —— 李录
+
+## 日期锚定
+
+当前日期为 `$CURRENT_DATE`。估值、股价、持仓市值必须基于最近交易日数据，搜索时query带当前年份。
 
 ## 设计理念
 

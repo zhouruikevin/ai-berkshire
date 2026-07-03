@@ -1,0 +1,13 @@
+schema_version: 1
+module_path: frontend_style
+title: 基于 Markdown 与 AI Agent 协作的投研内容生产体系
+scope: []
+source_files:
+    - skills/deep-company-series.md
+    - skills/wechat-article.md
+    - skills/earnings-team.md
+    - skills/investment-team.md
+    - CLAUDE.md
+    - assets/architecture.mmd
+depends_on: []
+related_to: []

@@ -1,6 +1,6 @@
 ---
 name: quality-screen
-description: "AI Berkshire skill: 去劣筛选：7条指标快速排除非一流公司. Source: skills/quality-screen.md."
+description: 去劣筛选：7条指标快速排除非一流公司。快速排除不符合一流公司标准的标的。
 ---
 
 ## Codex adapter note
@@ -9,7 +9,7 @@ This skill is generated from `skills/quality-screen.md` so Claude Code and Codex
 
 - Treat `$ARGUMENTS` as the user's request in the current Codex thread.
 - When the source mentions Claude-only surfaces such as Task, Agent, WebSearch, Bash, Read, or Write, use the closest Codex capability available in this session: subagents when available, web search when needed, shell commands for local tools, and normal file edits for workspace files.
-- Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
+- Use shared project tools from `tools/` in this repository. Tool commands use workspace-relative paths (`python3 tools/...`), so run them from the repo root.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
 # 去劣筛选：7条指标快速排除非一流公司
@@ -26,6 +26,10 @@ This skill is generated from `skills/quality-screen.md` so Claude Code and Codex
 | 主题 | `中国高股息50强` `全球AI算力链` | 先搜索主题相关公司，再逐家筛选 |
 
 行业/市场/主题模式下，输出额外包含：通过率统计、行业内排名、板块对比总结。
+
+## 日期锚定
+
+当前日期为 `$CURRENT_DATE`。筛选指标必须基于截至今日已披露的最新财年数据，搜索query中必须包含当前年份。
 
 ## 设计原则
 

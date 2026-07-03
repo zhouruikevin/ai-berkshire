@@ -1,6 +1,6 @@
 ---
 name: bottleneck-hunter
-description: "AI Berkshire skill: 供应链瓶颈猎手：AI驱动的全球产业链瓶颈套利. Source: skills/bottleneck-hunter.md."
+description: 供应链瓶颈猎手：AI驱动的全球产业链瓶颈套利。从物理供应链咽喉位置寻找被低估的第二层、第三层瓶颈公司，挖掘套利机会。
 ---
 
 ## Codex adapter note
@@ -9,7 +9,7 @@ This skill is generated from `skills/bottleneck-hunter.md` so Claude Code and Co
 
 - Treat `$ARGUMENTS` as the user's request in the current Codex thread.
 - When the source mentions Claude-only surfaces such as Task, Agent, WebSearch, Bash, Read, or Write, use the closest Codex capability available in this session: subagents when available, web search when needed, shell commands for local tools, and normal file edits for workspace files.
-- Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
+- Use shared project tools from `tools/` in this repository. Tool commands use workspace-relative paths (`python3 tools/...`), so run them from the repo root.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
 # 供应链瓶颈猎手：AI驱动的全球产业链瓶颈套利

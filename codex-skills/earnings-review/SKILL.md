@@ -1,6 +1,6 @@
 ---
 name: earnings-review
-description: "AI Berkshire skill: 财报精读：一手资料深度解读. Source: skills/earnings-review.md."
+description: 财报精读：一手资料深度解读。对目标公司财报进行深度分析，解读盈利能力、增长趋势、财务健康度。
 ---
 
 ## Codex adapter note
@@ -9,14 +9,14 @@ This skill is generated from `skills/earnings-review.md` so Claude Code and Code
 
 - Treat `$ARGUMENTS` as the user's request in the current Codex thread.
 - When the source mentions Claude-only surfaces such as Task, Agent, WebSearch, Bash, Read, or Write, use the closest Codex capability available in this session: subagents when available, web search when needed, shell commands for local tools, and normal file edits for workspace files.
-- Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
+- Use shared project tools from `tools/` in this repository. Tool commands use workspace-relative paths (`python3 tools/...`), so run them from the repo root.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
 # 财报精读：一手资料深度解读
 
 对 $ARGUMENTS 进行财报精读分析。
 
-**支持输入格式**：`公司名 季度`，例如：`腾讯 2025Q4`、`PDD 2025年报`、`美团 最新`（默认读取最近一期）
+**支持输入格式**：`公司名 季度`，例如：`腾讯 最新`（推荐，自动匹配截至 `$CURRENT_DATE` 已披露的最近一期）、`PDD 2025年报`、`美团 2025Q4`
 
 > "我从不看卖方研报，只读原始财报。" —— 李录
 >
@@ -210,13 +210,13 @@ python3 tools/financial_rigor.py verify-valuation \
 
 ```bash
 # Step 1 — 提取抽检清单
-python3 ~/ai-berkshire/tools/report_audit.py extract \
+python3 tools/report_audit.py extract \
   --report reports/{公司名}-earnings-{期间}.md
 
 # Step 2 — 对清单每项从可靠信源取数（参见 skills/financial-data.md）
 
 # Step 3 — 输出准出/打回判决
-python3 ~/ai-berkshire/tools/report_audit.py verdict \
+python3 tools/report_audit.py verdict \
   --results '<填好的JSON>' \
   --report {报告文件名}
 ```

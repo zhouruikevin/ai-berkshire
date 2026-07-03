@@ -8,9 +8,9 @@
 >
 > 用 AI 重新定义投资研究的深度与效率。
 
-**AI Berkshire** 是一套同时兼容 Claude Code 与 Codex 的投资研究 Skill 合集，将巴菲特、芒格、段永平、李录四位价值投资大师的方法论系统化、结构化，通过 AI Agent 实现专业级投资研究。
+**AI Berkshire** 是一套以 **Qoder** 为主环境、同时兼容 Claude Code 与 Codex 的投资研究 Skill 合集，将巴菲特、芒格、段永平、李录四位价值投资大师的方法论系统化、结构化，通过 AI Agent 实现专业级投资研究。
 
-一个人 + Claude Code / Codex = 一个投研团队。
+一个人 + Qoder（或 Claude Code / Codex） = 一个投研团队。
 
 [实盘业绩](#real-track-record) · [为什么不能直接问AI](#为什么不能直接问-ai) · [Skills 一览](#skills-一览18个) · [快速开始](#快速开始) · [实战报告](#实战研究报告) · [设计理念](#设计理念)
 
@@ -221,9 +221,15 @@ AI Berkshire 确保：**同样的输入 → 结构一致、深度一致的输出
 
 ## 快速开始
 
+> **推荐用 Qoder。** 本仓库已内置 `.qoder/`（rules + 18 个项目级 skill），用 Qoder 打开仓库即自动加载，无需任何安装。Claude Code / Codex 作为兼容入口同样支持。
+
 ### 1. 安装 AI 客户端
 
-本仓库保留同一套 canonical workflow，并分别提供 Claude Code commands 与 Codex skills。按你使用的客户端安装即可。
+本仓库保留同一套 canonical workflow，并分别提供 Qoder skills、Claude Code commands 与 Codex skills。按你使用的客户端安装即可。
+
+Qoder 用户（推荐）：
+
+到 [Qoder 官网](https://qoder.com) 下载安装 Qoder IDE，然后用它打开本仓库即可——`.qoder/skills` 会作为项目级技能自动加载，`.qoder/rules` 会自动注入研究规范。
 
 Claude Code 用户：
 
@@ -265,6 +271,18 @@ claude --dangerously-skip-permissions
 
 ### 2. 安装 Skills
 
+Qoder 用户（推荐）：
+
+```bash
+# 克隆仓库
+git clone https://github.com/xbtlin/ai-berkshire.git
+
+# 用 Qoder 打开该目录即可——项目级 skills 自动加载，无需安装。
+# 若想跨项目全局使用，可安装到用户级 ~/.qoder/skills：
+cd ai-berkshire
+./scripts/install-qoder-skills.sh
+```
+
 Claude Code 用户安装：
 
 ```bash
@@ -291,9 +309,11 @@ cd ai-berkshire
 ./scripts/install-codex-prompts.sh
 ```
 
-仓库同时维护三套入口：`skills/*.md` 是 Claude Code command 源文件；`codex-skills/*/SKILL.md` 是 Codex skill 包，由 `scripts/sync-codex-skills.py` 从 `skills/*.md` 生成；`codex-prompts/*.md` 是可选的 Codex slash prompt 兼容层。
+仓库以 `skills/*.md` 为**唯一 canonical 源**，其余入口均由脚本从它生成：`.qoder/skills/*/SKILL.md` 是 Qoder 项目级技能，由 `scripts/sync-qoder-skills.py` 生成；`codex-skills/*/SKILL.md` 是 Codex skill 包，由 `scripts/sync-codex-skills.py` 生成；`codex-prompts/*.md` 是可选的 Codex slash prompt 兼容层。改完 `skills/*.md` 后依次运行这三个 sync 脚本即可保持三平台一致。
 
 ### 3. 使用
+
+在 Qoder 中，输入 `/` 即可看到全部 18 个 skill，直接选用；也可以用自然语言描述任务，Qoder 会按 skill 的 description 自动匹配加载。斜杠调用方式与下方 Claude Code 示例一致（如 `/investment-research 腾讯`）。
 
 在 Claude Code 中直接调用：
 

@@ -1,11 +1,16 @@
 # AI Berkshire Codex Guide
 
 This repository contains investment research workflows, reports, and shared
-validation tools. Keep compatibility with both Claude Code and Codex users.
+validation tools. Qoder is the primary environment; keep compatibility with
+Claude Code and Codex users as well.
 
 ## Project Layout
 
-- `skills/*.md`: Claude Code slash-command source files.
+- `skills/*.md`: canonical workflow source (also used directly as Claude Code
+  slash-command files).
+- `.qoder/skills/*/SKILL.md`: Qoder project-level skills, generated from
+  `skills/*.md`. `.qoder/rules/*.md` are always-on Qoder rules; `.qoder/repowiki/`
+  is Qoder's auto-generated project knowledge base.
 - `codex-skills/*/SKILL.md`: Codex skill packages. Most are generated from
   `skills/*.md`; Codex-only hand-written packages are allowed when clearly
   marked and no same-named `skills/*.md` source exists.
@@ -14,6 +19,9 @@ validation tools. Keep compatibility with both Claude Code and Codex users.
 - `tools/*.py`: shared financial validation and data tools used by both systems.
 - `reports/`: research outputs. Do not rewrite unrelated reports while changing
   tooling or skills.
+- `scripts/sync-qoder-skills.py`: regenerates Qoder skills from `skills/*.md`.
+- `scripts/install-qoder-skills.sh`: installs Qoder skills to the user-level
+  `~/.qoder/skills` (project-level `.qoder/skills` needs no install).
 - `scripts/sync-codex-skills.py`: regenerates Codex skills from `skills/*.md`.
 - `scripts/install-codex-skills.sh`: installs Codex skills locally.
 - `scripts/install-codex-prompts.sh`: installs generated Codex slash prompts
@@ -23,17 +31,21 @@ validation tools. Keep compatibility with both Claude Code and Codex users.
 ## Compatibility Rules
 
 - Treat `skills/*.md` as the canonical workflow source.
-- After changing any file in `skills/`, run:
+- After changing any file in `skills/`, regenerate every downstream platform:
+  `python3 scripts/sync-qoder-skills.py`
   `python3 scripts/sync-codex-skills.py`
 - If slash prompt compatibility is needed, also run:
   `python3 scripts/sync-codex-prompts.py`
-- Do not manually edit generated `codex-skills/*/SKILL.md` unless also updating
-  the corresponding source in `skills/`.
+- Do not manually edit generated `codex-skills/*/SKILL.md` or
+  `.qoder/skills/*/SKILL.md` unless also updating the corresponding source in
+  `skills/` and re-running the sync scripts.
 - For Codex-only hand-written packages under `codex-skills/`, keep them clearly
   marked as Codex-only and do not create a same-named `skills/*.md` file unless
   intentionally adopting the workflow for Claude Code too.
-- Keep tool paths compatible with the documented checkout path:
-  `~/ai-berkshire/tools/...`
+- Reference tools by workspace-relative path (`tools/...`), not an absolute
+  checkout path. Agents run commands from the repo root (Qoder's workspace root,
+  or Claude Code launched inside the repo), so `python3 tools/financial_rigor.py`
+  resolves regardless of where the repo is cloned.
 - Keep `CLAUDE.md` for Claude Code behavior and this `AGENTS.md` for Codex
   behavior.
 
@@ -56,8 +68,10 @@ validation tools. Keep compatibility with both Claude Code and Codex users.
 - Keep changes scoped to the requested skill, tool, script, or documentation.
 - Before finishing a skill/tool change, run the relevant syntax or generation
   check. For compatibility changes, run:
+  `python3 scripts/sync-qoder-skills.py`
   `python3 scripts/sync-codex-skills.py`
-- To verify generated Codex artifacts are current without rewriting files, run:
+- To verify generated artifacts are current without rewriting files, run:
+  `python3 scripts/sync-qoder-skills.py --check`
   `python3 scripts/sync-codex-skills.py --check`
   and, when slash prompts are relevant:
   `python3 scripts/sync-codex-prompts.py --check`

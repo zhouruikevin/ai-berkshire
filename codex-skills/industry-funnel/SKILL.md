@@ -1,6 +1,6 @@
 ---
 name: industry-funnel
-description: "AI Berkshire skill: 行业漏斗筛选：从全市场到 3 家的价值投资精选流程. Source: skills/industry-funnel.md."
+description: 行业漏斗筛选：从全市场到3家的价值投资精选。从全市场扫描逐层精选到3家终选标的。
 ---
 
 ## Codex adapter note
@@ -9,7 +9,7 @@ This skill is generated from `skills/industry-funnel.md` so Claude Code and Code
 
 - Treat `$ARGUMENTS` as the user's request in the current Codex thread.
 - When the source mentions Claude-only surfaces such as Task, Agent, WebSearch, Bash, Read, or Write, use the closest Codex capability available in this session: subagents when available, web search when needed, shell commands for local tools, and normal file edits for workspace files.
-- Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
+- Use shared project tools from `tools/` in this repository. Tool commands use workspace-relative paths (`python3 tools/...`), so run them from the repo root.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
 # 行业漏斗筛选：从全市场到 3 家的价值投资精选流程
@@ -23,6 +23,8 @@ This skill is generated from `skills/industry-funnel.md` so Claude Code and Code
 2. 用统一标准过滤掉"故事股"和质量不足的公司
 3. 把精力聚焦到真正值得深度研究的 3 家头部
 4. 每层有明确的留/弃标准，可复盘可追溯
+
+**日期锚定**：当前日期为 `$CURRENT_DATE`。筛选数据必须基于截至今日已披露的最新财年，搜索query中必须包含当前年份。
 
 与 `industry-research` 的区别：
 - `industry-research` 偏重产业链结构与全景，环节切片
@@ -294,13 +296,13 @@ A = 数据充分可信；B = 部分缺失但不影响主结论；C = 缺失较�
 
 ```bash
 # Step 1 — 提取抽检清单（15% 随机抽样）
-python3 ~/ai-berkshire/tools/report_audit.py extract \
+python3 tools/report_audit.py extract \
   --report <报告文件路径>
 
 # Step 2 — 对清单每项从可靠信源取数（参见 skills/financial-data.md）
 
 # Step 3 — 输出准出/打回判决
-python3 ~/ai-berkshire/tools/report_audit.py verdict \
+python3 tools/report_audit.py verdict \
   --results '<填好的JSON>' \
   --report <报告文件名>
 ```
