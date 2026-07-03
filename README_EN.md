@@ -12,7 +12,7 @@ English | [中文](README.md)
 
 One person + Claude Code / Codex = an entire investment research team.
 
-[Track Record](#real-track-record) · [Why Not Just Ask AI?](#why-cant-you-just-ask-ai-directly) · [Skills](#skills-overview-18-skills) · [Quick Start](#quick-start) · [Reports](#live-research-reports) · [Design Philosophy](#design-philosophy)
+[Track Record](#real-track-record) · [Why Not Just Ask AI?](#why-cant-you-just-ask-ai-directly) · [Skills](#skills-overview-18-skills) · [Quick Start](#quick-start) · [Using Qoder](#using-qoder-primary-environment) · [Reports](#live-research-reports) · [Design Philosophy](#design-philosophy)
 
 ---
 
@@ -362,6 +362,61 @@ If you install Codex slash prompts, restart Codex and search for them in the `/`
 ```text
 /prompts:investment-research Tencent
 ```
+
+---
+
+## Using Qoder (Primary Environment)
+
+This repo is built for **Qoder** as the primary environment. `.qoder/` (rules + 18 project-level skills + repowiki) is committed, so it works out of the box.
+
+### Two entry points
+
+| Entry | How |
+|-------|-----|
+| **Qoder IDE** | Open this repo in Qoder → type `/` in the chat to pick a skill, or just describe the task (auto-matched by each skill's description) |
+| **Qoder CLI** | Run `qodercli` (interactive) or `qodercli -p "..."` (non-interactive) from the repo directory |
+
+Project-level skills load automatically on opening the repo — **no install needed**. Only run `./scripts/install-qoder-skills.sh` (installs to `~/.qoder/skills`) if you want them available across all projects.
+
+### Common CLI examples
+
+```bash
+# Interactive (recommended for research)
+qodercli -m Performance
+> /investment-research Tencent
+
+# Non-interactive (scripting / one-shot)
+qodercli -p -m Performance --output-format text "/financial-data Duofuduo 002407.SZ"
+```
+
+Gotchas found in testing:
+
+- In non-interactive `-p` piping, **always add `--output-format text`**, otherwise output may be empty.
+- **Do not pass `--tools ""`** (empty string disables tools) — it yields no output.
+- Use `Efficient`/`Lite` for quick checks to save credits; use `Performance`/`Ultimate` for real research.
+
+### Report output directory
+
+- **New reports** go to **`qoder_report/`** (structure and naming per the convention above).
+- The original `reports/` is a **read-only archive**.
+- Three continuously-maintained "living files" stay under `reports/`: `portfolio-latest.md`, `{company}-thesis.md`, `bottleneck-map/`.
+
+### Syncing after editing skills / tools
+
+`skills/*.md` is the **single canonical source**; `.qoder/skills` and `codex-skills` are generated from it:
+
+```bash
+# After editing skills/xxx.md, regenerate each platform
+python3 scripts/sync-qoder-skills.py      # → .qoder/skills
+python3 scripts/sync-codex-skills.py      # → codex-skills
+python3 scripts/sync-codex-prompts.py     # → codex-prompts (optional)
+
+# Verify in sync (non-zero exit = drifted)
+python3 scripts/sync-qoder-skills.py --check
+```
+
+- **Skill content** (.md): edit `skills/` only — never edit `.qoder/skills/` directly (it's generated and will be overwritten) — then run sync.
+- **Tool code** (`tools/*.py`): shared across platforms, edit directly, no sync needed; skills call tools via workspace-relative path `tools/xxx.py` (resolved from the repo root).
 
 ---
 

@@ -12,7 +12,7 @@
 
 一个人 + Qoder（或 Claude Code / Codex） = 一个投研团队。
 
-[实盘业绩](#real-track-record) · [为什么不能直接问AI](#为什么不能直接问-ai) · [Skills 一览](#skills-一览18个) · [快速开始](#快速开始) · [实战报告](#实战研究报告) · [设计理念](#设计理念)
+[实盘业绩](#real-track-record) · [为什么不能直接问AI](#为什么不能直接问-ai) · [Skills 一览](#skills-一览18个) · [快速开始](#快速开始) · [在 Qoder 中使用](#在-qoder-中使用主环境) · [实战报告](#实战研究报告) · [设计理念](#设计理念)
 
 ---
 
@@ -361,6 +361,61 @@ cd ai-berkshire
 ```text
 /prompts:investment-research 腾讯
 ```
+
+---
+
+## 在 Qoder 中使用（主环境）
+
+本仓库以 **Qoder** 为主环境，`.qoder/`（规则 + 18 个项目级 skill + repowiki）已随仓库入库，开箱即用。
+
+### 两种入口
+
+| 入口 | 用法 |
+|------|------|
+| **Qoder IDE** | 用 Qoder 打开本仓库 → 侧边栏对话里输入 `/` 选技能，或直接自然语言描述任务（按技能 description 自动匹配） |
+| **Qoder CLI** | 仓库目录下运行 `qodercli`（交互）或 `qodercli -p "..."`（非交互） |
+
+项目级 skill 打开仓库即自动加载，**无需安装**；只有想跨项目全局使用时才跑 `./scripts/install-qoder-skills.sh` 装到 `~/.qoder/skills`。
+
+### CLI 常用示例
+
+```bash
+# 交互模式（推荐做研究）
+qodercli -m Performance
+> /investment-research 腾讯
+
+# 非交互模式（脚本化 / 单次任务）
+qodercli -p -m Performance --output-format text "/financial-data 多氟多 002407.SZ"
+```
+
+实测踩坑（用 CLI 时注意）：
+
+- 非交互 `-p` 走管道时**务必加 `--output-format text`**，否则可能无输出。
+- **不要传 `--tools ""`**（空串禁用工具）会导致无输出。
+- 快速验证用 `Efficient`/`Lite` 省额度；正式投研用 `Performance`/`Ultimate` 质量更高。
+
+### 报告输出目录
+
+- **新生成的报告**统一输出到 **`qoder_report/`**（目录结构与命名见上文规范）。
+- 原 `reports/` 为**历史归档**，只读不改。
+- 三类持续维护型"活文件"仍在 `reports/` 就地更新：`portfolio-latest.md`、`{公司名}-thesis.md`、`bottleneck-map/`。
+
+### 修改技能 / 工具后如何同步
+
+`skills/*.md` 是**唯一 canonical 源**，`.qoder/skills`、`codex-skills` 都由它生成：
+
+```bash
+# 改完 skills/xxx.md 后，重新生成各平台
+python3 scripts/sync-qoder-skills.py      # → .qoder/skills
+python3 scripts/sync-codex-skills.py      # → codex-skills
+python3 scripts/sync-codex-prompts.py     # → codex-prompts（可选）
+
+# 校验是否已同步（退出码非 0 表示脱节）
+python3 scripts/sync-qoder-skills.py --check
+```
+
+- **技能内容**（.md）：只改 `skills/`，绝不直接改 `.qoder/skills/`（生成物会被覆盖），改完跑 sync。
+- **工具代码**（`tools/*.py`）：三平台共享同一份，直接改、免同步；技能里以工作区相对路径 `tools/xxx.py` 调用（在仓库根执行即命中）。
 
 ---
 
