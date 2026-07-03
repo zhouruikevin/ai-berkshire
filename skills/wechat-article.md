@@ -217,9 +217,9 @@ description: 微信公众号文章：作者-编辑-读者三Agent协作。产出
 
 | 类型 | 路径 | 命名格式 |
 |------|------|---------|
-| 技术主题 | `reports/AI产业研究/` | `公众号-{主题关键词}-{YYYYMMDD}.md` |
-| 投资主题 | `reports/{公司名}/` | `{公司名}-公众号-{YYYYMMDD}.md` |
-| 通用主题 | `reports/` | `公众号-{主题关键词}-{YYYYMMDD}.md` |
+| 技术主题 | `qoder_report/AI产业研究/` | `公众号-{主题关键词}-{YYYYMMDD}.md` |
+| 投资主题 | `qoder_report/{公司名}/` | `{公司名}-公众号-{YYYYMMDD}.md` |
+| 通用主题 | `qoder_report/` | `公众号-{主题关键词}-{YYYYMMDD}.md` |
 
 ---
 

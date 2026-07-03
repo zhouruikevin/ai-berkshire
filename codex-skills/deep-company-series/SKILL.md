@@ -120,7 +120,7 @@ This skill is generated from `skills/deep-company-series.md` so Claude Code and 
 
 ### 阶段 2：写作（按 01→08 顺序写，不跳）
 
-- 每篇写完先存 `reports/{公司名}/《看懂{公司名}》/0X-XX.md`
+- 每篇写完先存 `qoder_report/{公司名}/《看懂{公司名}》/0X-XX.md`
 - 不立即推 GitHub——等用户审阅
 - 用户提修订意见后修改
 - 修订完才 git push
@@ -137,7 +137,7 @@ This skill is generated from `skills/deep-company-series.md` so Claude Code and 
 
 ```bash
 # 推送前必须本地 grep 一次（按 ai-berkshire 隐私规则）
-grep -r "linxuan\|/Users/\|<用户公司花名>" reports/ | head
+grep -r "linxuan\|/Users/\|<用户公司花名>" qoder_report/ | head
 ```
 
 确认无误后才 `git pull --rebase && git commit && git push`。

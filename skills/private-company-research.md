@@ -1056,7 +1056,7 @@ Top 3 核心风险及应对策略
 
 ### 第八步：保存报告
 
-将完整最终报告写入 `reports/{公司名}/{公司名}-private-{YYYYMMDD}.md`。
+将完整最终报告写入 `qoder_report/{公司名}/{公司名}-private-{YYYYMMDD}.md`。
 
 ### 第九步：清理团队
 

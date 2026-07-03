@@ -16,6 +16,8 @@ assets/          — 图片等静态资源
 
 ## 报告目录结构
 
+> **输出目录（2026-07-03 起）**：所有**新生成**的报告输出到 `qoder_report/`，目录结构与命名沿用下表规范（下表中出现的 `reports/` 一律理解为 `qoder_report/`）。原 `reports/` 为历史归档，**只读不改**。以下三类**持续维护型文件**例外，仍在 `reports/` 就地更新（避免历史断裂）：`reports/portfolio-latest.md`、`reports/{公司名}-thesis.md`、`reports/bottleneck-map/`。
+
 所有报告按**公司名**建文件夹，公司相关的所有报告放在对应文件夹内：
 
 ```
