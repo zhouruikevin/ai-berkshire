@@ -56,10 +56,16 @@ python3 tools/tushare_fetcher.py batch-quote
 # 财务指标（最近季度 EPS/ROE/毛利率）
 python3 tools/tushare_fetcher.py financials 002407.SZ
 
-# 利润表（营收/净利润）
+# 利润表（营收/净利润 + 同比）
 python3 tools/tushare_fetcher.py income 002407.SZ
 
-# 更新本地缓存（单只/全部）
+# 资产负债表（总资产/总负债/净资产/资产负债率）
+python3 tools/tushare_fetcher.py balancesheet 002407.SZ
+
+# 现金流量表（经营/投资/筹资/自由现金流）
+python3 tools/tushare_fetcher.py cashflow 002407.SZ
+
+# 更新本地缓存（单只/全部，含以上全部数据）
 python3 tools/tushare_fetcher.py update 002407.SZ
 python3 tools/tushare_fetcher.py update-all
 ```
@@ -72,6 +78,8 @@ python3 tools/tushare_fetcher.py update-all
 | `daily` | 日线行情（开高低收量） | 当日收盘后更新 |
 | `fina_indicator` | 财务指标（EPS/ROE/毛利率等） | 财报发布后更新 |
 | `income` | 利润表（营收/净利润） | 财报发布后更新 |
+| `balancesheet` | 资产负债表（总资产/负债/净资产/货币资金） | 财报发布后更新 |
+| `cashflow` | 现金流量表（经营/投资/筹资/自由现金流） | 财报发布后更新 |
 
 ---
 

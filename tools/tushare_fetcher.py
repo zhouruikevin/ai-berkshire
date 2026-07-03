@@ -10,6 +10,8 @@ HTTP 协议 POST 到 `.env` 中配置的 `TUSHARE_API_URL`（支持自建/代理
     python3 tools/tushare_fetcher.py batch-quote            # 批量估值（watchlist 中所有 A 股）
     python3 tools/tushare_fetcher.py financials 002407.SZ   # 财务指标 EPS/ROE/毛利率
     python3 tools/tushare_fetcher.py income 002407.SZ       # 利润表 营收/净利润 + 同比
+    python3 tools/tushare_fetcher.py balancesheet 002407.SZ # 资产负债表 + 资产负债率
+    python3 tools/tushare_fetcher.py cashflow 002407.SZ     # 现金流量表 经营/投资/筹资
     python3 tools/tushare_fetcher.py update 002407.SZ       # 更新本地缓存（单只）
     python3 tools/tushare_fetcher.py update-all             # 更新本地缓存（watchlist 全部 A 股）
 
@@ -102,9 +104,17 @@ def _is_a_share(code: str) -> bool:
 
 
 def _latest(rows: list[dict], key: str) -> dict | None:
-    """取 key（如 end_date/trade_date）最大的一行。"""
+    """取 key（如 end_date/trade_date）最大的一行；同期多行时取字段最全的一行。
+
+    TuShare 部分接口（如 cashflow）会对同一报告期返回多行（有的字段为空），
+    故同期并列时选非空字段最多的那行，避免拿到残缺记录。
+    """
     dated = [r for r in rows if r.get(key)]
-    return max(dated, key=lambda r: r[key]) if dated else None
+    if not dated:
+        return None
+    top = max(r[key] for r in dated)
+    tied = [r for r in dated if r[key] == top]
+    return max(tied, key=lambda r: sum(v is not None for v in r.values()))
 
 
 def _wan_to_yi(value) -> float | None:
@@ -184,6 +194,54 @@ def get_income(code: str) -> dict:
     return result
 
 
+def get_balancesheet(code: str) -> dict:
+    code = normalize_code(code)
+    rows = _api_call(
+        "balancesheet",
+        {"ts_code": code},
+        "ts_code,end_date,total_assets,total_liab,"
+        "total_hldr_eqy_exc_min_int,total_hldr_eqy_inc_min_int,money_cap",
+    )
+    latest = _latest(rows, "end_date")
+    if not latest:
+        return {"code": code, "error": "无 balancesheet 数据"}
+    assets = latest.get("total_assets")
+    liab = latest.get("total_liab")
+    result = {
+        "code": code,
+        "end_date": latest.get("end_date"),
+        "total_assets": assets,
+        "total_liab": liab,
+        "equity_attr_p": latest.get("total_hldr_eqy_exc_min_int"),
+        "equity_incl_min": latest.get("total_hldr_eqy_inc_min_int"),
+        "money_cap": latest.get("money_cap"),
+    }
+    if isinstance(assets, (int, float)) and isinstance(liab, (int, float)) and assets:
+        result["debt_ratio_pct"] = round(liab / assets * 100, 2)
+    return result
+
+
+def get_cashflow(code: str) -> dict:
+    code = normalize_code(code)
+    rows = _api_call(
+        "cashflow",
+        {"ts_code": code},
+        "ts_code,end_date,n_cashflow_act,n_cashflow_inv_act,"
+        "n_cash_flows_fnc_act,free_cashflow",
+    )
+    latest = _latest(rows, "end_date")
+    if not latest:
+        return {"code": code, "error": "无 cashflow 数据"}
+    return {
+        "code": code,
+        "end_date": latest.get("end_date"),
+        "operating_cf": latest.get("n_cashflow_act"),
+        "investing_cf": latest.get("n_cashflow_inv_act"),
+        "financing_cf": latest.get("n_cash_flows_fnc_act"),
+        "free_cashflow": latest.get("free_cashflow"),
+    }
+
+
 def _a_share_codes() -> list[str]:
     """从 watchlist.json 收集所有 A 股代码。"""
     if not WATCHLIST.exists():
@@ -215,6 +273,14 @@ def cmd_income(code: str) -> None:
     print(json.dumps(get_income(code), ensure_ascii=False, indent=2))
 
 
+def cmd_balancesheet(code: str) -> None:
+    print(json.dumps(get_balancesheet(code), ensure_ascii=False, indent=2))
+
+
+def cmd_cashflow(code: str) -> None:
+    print(json.dumps(get_cashflow(code), ensure_ascii=False, indent=2))
+
+
 def cmd_batch_quote() -> None:
     codes = _a_share_codes()
     if not codes:
@@ -234,14 +300,19 @@ def _write_cache(records: dict) -> None:
     )
 
 
-def cmd_update(code: str) -> None:
-    code = normalize_code(code)
-    record = {
+def _full_record(code: str) -> dict:
+    return {
         "quote": get_quote(code),
         "financials": get_financials(code),
         "income": get_income(code),
+        "balancesheet": get_balancesheet(code),
+        "cashflow": get_cashflow(code),
     }
-    _write_cache({code: record})
+
+
+def cmd_update(code: str) -> None:
+    code = normalize_code(code)
+    _write_cache({code: _full_record(code)})
     print(f"已更新缓存 {code} -> {CACHE_FILE.relative_to(ROOT)}")
 
 
@@ -252,11 +323,7 @@ def cmd_update_all() -> None:
         return
     records = {}
     for c in codes:
-        records[c] = {
-            "quote": get_quote(c),
-            "financials": get_financials(c),
-            "income": get_income(c),
-        }
+        records[c] = _full_record(c)
         print(f"  已拉取 {c}")
     _write_cache(records)
     print(f"已更新 {len(records)} 只 A 股缓存 -> {CACHE_FILE.relative_to(ROOT)}")
@@ -277,6 +344,12 @@ def main() -> None:
     p_inc = sub.add_parser("income", help="利润表 营收/净利润 + 同比")
     p_inc.add_argument("code", help="股票代码")
 
+    p_bs = sub.add_parser("balancesheet", help="资产负债表 总资产/总负债/净资产/资产负债率")
+    p_bs.add_argument("code", help="股票代码")
+
+    p_cf = sub.add_parser("cashflow", help="现金流量表 经营/投资/筹资/自由现金流")
+    p_cf.add_argument("code", help="股票代码")
+
     p_upd = sub.add_parser("update", help="更新本地缓存（单只）")
     p_upd.add_argument("code", help="股票代码")
 
@@ -288,6 +361,8 @@ def main() -> None:
         "batch-quote": cmd_batch_quote,
         "financials": lambda: cmd_financials(args.code),
         "income": lambda: cmd_income(args.code),
+        "balancesheet": lambda: cmd_balancesheet(args.code),
+        "cashflow": lambda: cmd_cashflow(args.code),
         "update": lambda: cmd_update(args.code),
         "update-all": cmd_update_all,
     }
