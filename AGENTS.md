@@ -23,10 +23,12 @@ Claude Code and Codex users as well.
 - `scripts/install-qoder-skills.sh`: installs Qoder skills to the user-level
   `~/.qoder/skills` (project-level `.qoder/skills` needs no install).
 - `scripts/sync-codex-skills.py`: regenerates Codex skills from `skills/*.md`.
-- `scripts/install-codex-skills.sh`: installs Codex skills locally.
-- `scripts/install-codex-prompts.sh`: installs generated Codex slash prompts
-  locally.
-- `scripts/install-claude-commands.sh`: installs Claude Code commands locally.
+- `scripts/install-codex-skills.sh` / `scripts/install-codex-skills.bat`:
+  installs Codex skills locally.
+- `scripts/install-codex-prompts.sh` / `scripts/install-codex-prompts.bat`:
+  installs generated Codex slash prompts locally.
+- `scripts/install-claude-commands.sh` / `scripts/install-claude-commands.bat`:
+  installs Claude Code commands locally.
 
 ## Compatibility Rules
 
@@ -51,6 +53,10 @@ Claude Code and Codex users as well.
 
 ## Research Quality Rules
 
+- Before starting any research, run the `date` command to confirm today's
+  date. Treat that date as the baseline for "latest" data (prices, market cap,
+  most recent filings), and state the data cutoff date in the report header.
+  Never assume the current date from training data.
 - Financial data must come from at least two independent sources when the skill
   requires verification.
 - Use exact arithmetic tools for market cap, valuation, cross-source checks, and
