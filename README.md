@@ -46,6 +46,14 @@
 
 > *免责声明：历史收益不代表未来表现。截图来自富途证券真实账户。*
 
+### 精选研究首发于公众号
+
+仓库里是完整的框架和全量报告，公众号里是**精选**——真正值得下注的公司深度研究，加上报告之外我自己的判断与取舍：
+
+<img src="assets/wechat-qr.png" width="160" alt="微信公众号：复利炼丹炉" />
+
+**复利炼丹炉** —— 用 AI 炼投研这颗丹。
+
 ---
 
 ## 为什么不能直接问 AI？
@@ -764,6 +772,6 @@ MIT License
 
 ## Star History
 
-如果这个项目对你有帮助，请给一个 Star 支持！
+如果这个项目对你有帮助，请给一个 Star 支持！精选公司研究与个人判断首发于微信公众号「**复利炼丹炉**」（二维码见[文首](#精选研究首发于公众号)）。
 
 [![Star History Chart](https://api.star-history.com/svg?repos=xbtlin/ai-berkshire&type=Date)](https://star-history.com/#xbtlin/ai-berkshire&Date)
