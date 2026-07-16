@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6924cc6b-b641-43ec-bb26-5c6b24f9077e" name="Changes" comment="docs(research): 新增兆易创新与大族激光投资研究报告&#10;&#10;- 完整撰写兆易创新投资研究报告，涵盖业务结构、护城河、风险及估值分析&#10;- 提供大族激光公司最新财务数据与市场定价，重点提示盈利质量与毛利率趋势&#10;- 分析两家公司行业地位、核心竞争力及管理层表现&#10;- 收集汇总多渠道数据，确保报告信息交叉验证一致&#10;- 明确报告目的为投资参考，强调周期性风险及当前估值泡沫&#10;- 体现四大师投资视角与思考，辅助价值投资决策" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {}
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:xbtlin/ai-berkshire.git&quot;,
+    &quot;accountId&quot;: &quot;73f24b35-5b76-460f-ade2-2d66c6627260&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="3FXefF70xqkbOxEY9mxqXQaGFTZ" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;fork&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/eleme/Documents/ai/ai-berkshire/reports/202606&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/reports/202606" />
+      <recent name="$PROJECT_DIR$/reports/AA我的关注/圣泉集团" />
+      <recent name="$PROJECT_DIR$/reports/AA我的关注/中钨高新" />
+      <recent name="$PROJECT_DIR$/reports/AA我的关注/中国巨石" />
+      <recent name="$PROJECT_DIR$/reports/AA我的关注/中天科技" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/qoder_report" />
+      <recent name="$PROJECT_DIR$/reports/202606" />
+      <recent name="$PROJECT_DIR$/reports/AA我的关注" />
+      <recent name="$PROJECT_DIR$/reports/other" />
+      <recent name="$PROJECT_DIR$/reports/我的关注" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6924cc6b-b641-43ec-bb26-5c6b24f9077e" name="Changes" comment="" />
+      <created>1782225942266</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1782225942266</updated>
+    </task>
+    <task id="LOCAL-00001">
+      <option name="closed" value="true" />
+      <created>1782281198990</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1782281198990</updated>
+    </task>
+    <task id="LOCAL-00002" summary="docs(reports): 新增10家公司四大师综合研究报告及横向对比研究&#10;&#10;- 新增中国巨石、 中天科技、 中材科技、 中钨高新、 亨通光电、 华正新材、 圣泉集团、 烽火通信、 瑞芯微、 禾盛新材10家公司详尽研究报告&#10;- 报告涵盖核心财务数据、业务结构、生意本质、护城河、风险评估、三情景估值及投资建议&#10;- 发布10家公司在新材料、光通信、芯片领域的横向对比分析报告&#10;- 提供综合评分及三情景估值汇总，评估各公司生意质量、增长确定性及估值合理性&#10;- 报告日期统一为2026-06-23，信息等级覆盖A级及B级，AI投资置信度和确定性说明明确">
+      <option name="closed" value="true" />
+      <created>1782281226915</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1782281226915</updated>
+    </task>
+    <task id="LOCAL-00003" summary="docs(reports): 新增IC载板和半导体材料设备公司深度报告&#10;&#10;- 新增2026年6月26日IC载板行业深度研究报告，涵盖行业定义、市场规模、竞争格局、技术壁垒和行业周期等&#10;- 报告详细分析ABF载板作为AI算力关键材料的供需缺口及市场预测&#10;- 介绍全球及中国大陆IC载板市场份额和国产化率现状&#10;- 汇总主要厂商产能扩展计划及技术差距，评估行业估值与风险提示&#10;- 新增巴菲特价值投资视角下半导体产业链10家公司详细Checklist分析&#10;- 包含各公司能力圈、好生意、护城河、管理层和安全边际评级与综合评价">
+      <option name="closed" value="true" />
+      <created>1782487490135</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1782487490135</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat(reports): 新增盛弘股份与天承科技综合投资研究报告&#10;&#10;- 完成基于巴菲特、芒格、段永平和李录四大师分析框架的深度对比&#10;- 详述公司核心财务指标、业务本质及商业模式分析&#10;- 评估两家公司护城河及未来发展潜力，揭示潜在风险清单&#10;- 归纳管理层能力及资本配置表现，提供多角度投资判断&#10;- 运用文明演进视角分析行业趋势及公司战略契合度&#10;- 实现详细估值测算，提出三情景投资建议及安全边际评估&#10;- 汇总四大师模拟点评，呈现多元投资观点与思考&#10;- 提供AI分析置信度与投资确定性评级，辅助决策参考">
+      <option name="closed" value="true" />
+      <created>1782745390016</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1782745390016</updated>
+    </task>
+    <task id="LOCAL-00005" summary="docs(reports): 添加云南锗业深度研究和Ferrotec竞争壁垒报告&#10;&#10;- 新增云南锗业2026年7月深度研究报告，纠正碲资源定位误区&#10;- 详尽分析云南锗业锗资源、财务、护城河及风险评估&#10;- 引用巴菲特、芒格、段永平、李录四位大师投资视角&#10;- 添加Ferrotec公司及热电模块市场竞争壁垒详述&#10;- 包含全球市场格局、材料与技术壁垒、专利、认证与转换成本&#10;- 介绍中国竞争者现状及出口管制影响&#10;- 补充半导体设备零部件业务和定价权分析&#10;- 更新中科曙光研究报告AI服务器竞争格局调整内容">
+      <option name="closed" value="true" />
+      <created>1782979103680</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1782979103680</updated>
+    </task>
+    <task id="LOCAL-00006" summary="docs(jd-report): 新增京东投资研究报告内容&#10;&#10;- 完整撰写2026年京东集团业务及财务分析报告&#10;- 深入剖析京东零售业务及外卖新业务的盈利状况和战略选择&#10;- 评估公司护城河、竞争优势及管理层治理结构&#10;- 提供行业格局、风险清单及历史类比的多维度分析&#10;- 详细展开估值方法、情景假设及股价合理区间建议&#10;- 汇总综合决策备忘录，给出投资建议及风险提示">
+      <option name="closed" value="true" />
+      <created>1783326617783</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1783326617783</updated>
+    </task>
+    <task id="LOCAL-00007" summary="feat(qoder_report): 新增小米集团与工业富联深度分析报告&#10;&#10;- 新增“01810.HK小米集团”历史估值分位报告，详述近3年估值区间与未来盈利预期  &#10;- 提供小米IFRS与Non-IFRS口径估值比较及分位说明，重点分析低估区位因素  &#10;- 新增“工业富联（601138.SH）商业模式”段永平视角分析，详评其代工本质与护城河缺失  &#10;- 详细拆解工业富联收入结构、AI服务器供应链地位及价值分配，揭示低毛利及定价权弱势  &#10;- 评估工业富联治理风险、关联交易及现金流问题，结合财务质量分析提出投资风险提示  &#10;- 新增工业富联财务估值报告，基于巴菲特视角分析估值安全边际与成长质量  &#10;- 报告采用丰富数据来源及多视角严谨呈现，附录包含完整PE序列和详细财务测算">
+      <option name="closed" value="true" />
+      <created>1783525041125</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1783525041125</updated>
+    </task>
+    <task id="LOCAL-00008" summary="docs(research): 新增兆易创新与大族激光投资研究报告&#10;&#10;- 完整撰写兆易创新投资研究报告，涵盖业务结构、护城河、风险及估值分析&#10;- 提供大族激光公司最新财务数据与市场定价，重点提示盈利质量与毛利率趋势&#10;- 分析两家公司行业地位、核心竞争力及管理层表现&#10;- 收集汇总多渠道数据，确保报告信息交叉验证一致&#10;- 明确报告目的为投资参考，强调周期性风险及当前估值泡沫&#10;- 体现四大师投资视角与思考，辅助价值投资决策">
+      <option name="closed" value="true" />
+      <created>1783615147142</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1783615147142</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="6e235f6f-cfb7-43d6-852b-20dd4a8056a0" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="6e235f6f-cfb7-43d6-852b-20dd4a8056a0">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:/Users/eleme/Documents/ai/ai-berkshire/实盘记录" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="chore(report): 删除微软投资研究报告文件&#10;&#10;- 完全移除“reports/微软/微软-research-20260623.md”文件&#10;- 清理过时或冗余的研究文档数据&#10;- 减少项目中文件冗余，便于维护和更新最新报告&#10;- 保持代码仓库整洁，避免无效文件占用空间" />
+    <MESSAGE value="docs(reports): 新增10家公司四大师综合研究报告及横向对比研究&#10;&#10;- 新增中国巨石、 中天科技、 中材科技、 中钨高新、 亨通光电、 华正新材、 圣泉集团、 烽火通信、 瑞芯微、 禾盛新材10家公司详尽研究报告&#10;- 报告涵盖核心财务数据、业务结构、生意本质、护城河、风险评估、三情景估值及投资建议&#10;- 发布10家公司在新材料、光通信、芯片领域的横向对比分析报告&#10;- 提供综合评分及三情景估值汇总，评估各公司生意质量、增长确定性及估值合理性&#10;- 报告日期统一为2026-06-23，信息等级覆盖A级及B级，AI投资置信度和确定性说明明确" />
+    <MESSAGE value="docs(reports): 新增IC载板和半导体材料设备公司深度报告&#10;&#10;- 新增2026年6月26日IC载板行业深度研究报告，涵盖行业定义、市场规模、竞争格局、技术壁垒和行业周期等&#10;- 报告详细分析ABF载板作为AI算力关键材料的供需缺口及市场预测&#10;- 介绍全球及中国大陆IC载板市场份额和国产化率现状&#10;- 汇总主要厂商产能扩展计划及技术差距，评估行业估值与风险提示&#10;- 新增巴菲特价值投资视角下半导体产业链10家公司详细Checklist分析&#10;- 包含各公司能力圈、好生意、护城河、管理层和安全边际评级与综合评价" />
+    <MESSAGE value="feat(reports): 新增盛弘股份与天承科技综合投资研究报告&#10;&#10;- 完成基于巴菲特、芒格、段永平和李录四大师分析框架的深度对比&#10;- 详述公司核心财务指标、业务本质及商业模式分析&#10;- 评估两家公司护城河及未来发展潜力，揭示潜在风险清单&#10;- 归纳管理层能力及资本配置表现，提供多角度投资判断&#10;- 运用文明演进视角分析行业趋势及公司战略契合度&#10;- 实现详细估值测算，提出三情景投资建议及安全边际评估" />
+    <MESSAGE value="docs(reports): 添加云南锗业深度研究和Ferrotec竞争壁垒报告&#10;&#10;- 新增云南锗业2026年7月深度研究报告，纠正碲资源定位误区&#10;- 详尽分析云南锗业锗资源、财务、护城河及风险评估&#10;- 引用巴菲特、芒格、段永平、李录四位大师投资视角&#10;- 添加Ferrotec公司及热电模块市场竞争壁垒详述&#10;- 包含全球市场格局、材料与技术壁垒、专利、认证与转换成本&#10;- 介绍中国竞争者现状及出口管制影响&#10;- 补充半导体设备零部件业务和定价权分析&#10;- 更新中科曙光研究报告AI服务器竞争格局调整内容" />
+    <MESSAGE value="docs(jd-report): 新增京东投资研究报告内容&#10;&#10;- 完整撰写2026年京东集团业务及财务分析报告&#10;- 深入剖析京东零售业务及外卖新业务的盈利状况和战略选择&#10;- 评估公司护城河、竞争优势及管理层治理结构&#10;- 提供行业格局、风险清单及历史类比的多维度分析&#10;- 详细展开估值方法、情景假设及股价合理区间建议&#10;- 汇总综合决策备忘录，给出投资建议及风险提示" />
+    <MESSAGE value="feat(qoder_report): 新增小米集团与工业富联深度分析报告&#10;&#10;- 新增“01810.HK小米集团”历史估值分位报告，详述近3年估值区间与未来盈利预期  &#10;- 提供小米IFRS与Non-IFRS口径估值比较及分位说明，重点分析低估区位因素  &#10;- 新增“工业富联（601138.SH）商业模式”段永平视角分析，详评其代工本质与护城河缺失  &#10;- 详细拆解工业富联收入结构、AI服务器供应链地位及价值分配，揭示低毛利及定价权弱势  &#10;- 评估工业富联治理风险、关联交易及现金流问题，结合财务质量分析提出投资风险提示  &#10;- 新增工业富联财务估值报告，基于巴菲特视角分析估值安全边际与成长质量  &#10;- 报告采用丰富数据来源及多视角严谨呈现，附录包含完整PE序列和详细财务测算" />
+    <MESSAGE value="docs(research): 新增兆易创新与大族激光投资研究报告&#10;&#10;- 完整撰写兆易创新投资研究报告，涵盖业务结构、护城河、风险及估值分析&#10;- 提供大族激光公司最新财务数据与市场定价，重点提示盈利质量与毛利率趋势&#10;- 分析两家公司行业地位、核心竞争力及管理层表现&#10;- 收集汇总多渠道数据，确保报告信息交叉验证一致&#10;- 明确报告目的为投资参考，强调周期性风险及当前估值泡沫&#10;- 体现四大师投资视角与思考，辅助价值投资决策" />
+    <option name="LAST_COMMIT_MESSAGE" value="docs(research): 新增兆易创新与大族激光投资研究报告&#10;&#10;- 完整撰写兆易创新投资研究报告，涵盖业务结构、护城河、风险及估值分析&#10;- 提供大族激光公司最新财务数据与市场定价，重点提示盈利质量与毛利率趋势&#10;- 分析两家公司行业地位、核心竞争力及管理层表现&#10;- 收集汇总多渠道数据，确保报告信息交叉验证一致&#10;- 明确报告目的为投资参考，强调周期性风险及当前估值泡沫&#10;- 体现四大师投资视角与思考，辅助价值投资决策" />
+  </component>
+</project>

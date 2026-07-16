@@ -8,3 +8,6 @@ reports/.DS_Store
 
 # TuShare 本地缓存（每日刷新，不入库）
 data/tushare_cache.json
+
+# 环境变量（含 API token，本地使用）
+.env

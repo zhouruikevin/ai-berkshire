@@ -1,0 +1,10 @@
+n=100 cum=2829.05 avg=28.29 pos=59 neg=41 zero=0
+max=('2026-03-09', 372.13) min=('2026-03-05', -277.35)
+2026-01: sum=32.22 days=1 pos=1 neg=0
+2026-02: sum=905.73 days=14 pos=11 neg=3
+2026-03: sum=614.0 days=22 pos=12 neg=10
+2026-04: sum=565.4 days=19 pos=12 neg=7
+2026-05: sum=-35.54 days=17 pos=8 neg=9
+2026-06: sum=271.11 days=21 pos=10 neg=11
+2026-07: sum=476.13 days=6 pos=5 neg=1
+近端=净流入 连续=5天
