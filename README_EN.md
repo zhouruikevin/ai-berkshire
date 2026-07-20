@@ -12,7 +12,7 @@ English | [中文](README.md)
 
 One person + Claude Code / Codex = an entire investment research team.
 
-[Track Record](#real-track-record) · [Why Not Just Ask AI?](#why-cant-you-just-ask-ai-directly) · [Skills](#skills-overview-18-skills) · [Quick Start](#quick-start) · [Using Qoder](#using-qoder-primary-environment) · [Reports](#live-research-reports) · [Design Philosophy](#design-philosophy)
+[Track Record](#real-track-record) · [Why Not Just Ask AI?](#why-cant-you-just-ask-ai-directly) · [Skills](#skills-overview-20-skills) · [Quick Start](#quick-start) · [Reports](#live-research-reports) · [Design Philosophy](#design-philosophy)
 
 ---
 
@@ -167,13 +167,13 @@ Ask AI directly, and you have one context window. Four parallel Agents means 4×
 > Source: [`assets/architecture.mmd`](assets/architecture.mmd) (editable Mermaid diagram)
 
 **Three-Layer Design Philosophy**:
-- **Skill Layer**: Abstracts "what you want to do" into 18 clear entry points — deep research, earnings analysis, industry screening, portfolio management, and thinking tools. Pick by scenario.
-- **Agent Layer**: Each skill runs 4 Agents in parallel — they search independently, judge independently, challenge each other, and the Team Lead synthesizes.
+- **Skill Layer**: Abstracts "what you want to do" into 20 clear entry points — deep research, earnings analysis, industry screening, portfolio management, and thinking tools. Pick by scenario.
+- **Agent Layer**: Team skills (e.g. `/investment-team`, `/earnings-team`) run 4 master-perspective Agents in parallel under a Team Lead — searching and judging independently, challenging each other before synthesis. Lightweight skills skip this layer and call tools directly.
 - **Tool Layer**: Exact-precision calculations, real-time web search, report auditing — ensures every report's data is rigorous and verifiable.
 
 ---
 
-## Skills Overview (18 Skills)
+## Skills Overview (20 Skills)
 
 ### 🔬 Deep Research
 
@@ -206,6 +206,7 @@ Ask AI directly, and you have one context window. Four parallel Agents means 4×
 
 | Skill | Purpose | When to Use |
 |-------|---------|-------------|
+| [`/income-investment`](skills/income-investment.md) | Income-centered equity analysis | Distinguish durable income, opportunistic yield, and yield traps |
 | [`/portfolio-review`](skills/portfolio-review.md) | Portfolio review & optimization | Graduate from "researching companies" to "managing a portfolio" — sizing, concentration, rebalancing |
 | [`/thesis-tracker`](skills/thesis-tracker.md) | Investment thesis tracker | Post-buy discipline system: continuously track whether your thesis has been falsified |
 | [`/news-pulse`](skills/news-pulse.md) | Price-move rapid attribution | When a stock surges or drops — figure out "what happened" in 10 minutes |
@@ -338,6 +339,7 @@ Invoke directly in Claude Code:
 /investment-checklist Moutai, NVIDIA, Apple
 
 # Portfolio Management
+/income-investment Verizon mode=existing role=core-income quantity=100 cost_basis=39.50 tax_residence=France horizon=5y
 /portfolio-review Tencent 30%, Meituan 20%, Moutai 20%, Cash 30%
 /thesis-tracker Pinduoduo
 /news-pulse Tencent
