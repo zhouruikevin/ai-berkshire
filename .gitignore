@@ -32,3 +32,9 @@ data/tushare_cache.json
 reports/portfolio-latest.md
 
 # 实盘记录/ 公开权重口径版；原始账本（含股数/金额）在 local/实盘记录-原始/（已被 /local/ 规则覆盖）
+
+# ===== IDE / 工具生成文件，不入库 =====
+.idea/
+.playwright-mcp/
+__pycache__/
+*.pyc
