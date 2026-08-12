@@ -1,0 +1,114 @@
+---
+name: southbound-flow
+description: 南向资金总量追踪：统计港股通(南向)每日净流入的时间序列、区间累计与趋势方向，窗口任意(默认30交易日,可指定100天等)。数据源东方财富公开接口，只算南向总量、不拆个股。
+---
+
+## Qoder adapter note
+
+This skill is generated from `skills/southbound-flow.md`. Qoder and Claude Code share one canonical workflow.
+
+- **Tool mapping**: This skill may reference `Task` (background agent), `Team` (multi-agent), or `run_in_background`. In Qoder, use the `Agent` tool for background/sub-agents (with `is_background=true` for Bash) and launch multiple parallel `Agent` calls instead of `Team`.
+- **Permission config**: `.claude/settings.local.json` references do not apply. In Qoder, tool permissions are handled by the IDE; if a tool is blocked, grant it via the IDE's permission prompt.
+- **Project rules**: References to `CLAUDE.md` are for project conventions. Qoder uses `AGENTS.md` and `.qoder/rules/` for the same purpose — follow whichever file is present and scoped to your role.
+- **Placeholders**: `$ARGUMENTS` and `$CURRENT_DATE` work identically in Qoder.
+- **Report output**: Use `qoder_report/` as the output directory (see CLAUDE.md report naming conventions).
+- **Shared tools**: Commands use workspace-relative paths (`python3 tools/...`), run from the repo root.
+
+# 南向资金总量追踪：港股通净流入时间序列与趋势
+
+对 $ARGUMENTS 追踪南向资金（港股通，内地资金流入港股）——以「日」为单位统计一段窗口内（默认近 30 个交易日，可通过 `--days` 指定任意长度，如 100）的南向**总量**净流入、区间累计与趋势方向。只算南向总量，不拆个股。
+
+所有确定性汇总（每日换算、区间累计、日均、连续天数、持股市值变化）一律通过 `tools/southbound_flow.py` 完成，**禁止 LLM 心算**。
+
+## 日期锚定
+
+当前日期为 `$CURRENT_DATE`。窗口**默认近 30 个交易日**，可通过 `--days N`（无上限）或 `--start/--end YYYYMMDD` 指定。搜索 query 中必须包含当前年份。
+
+## 数据源
+
+**东方财富公开数据中心**（无需 token）：`RPT_MUTUAL_DEAL_HISTORY` 接口，`MUTUAL_TYPE=006` 即南向合计（= 港股通沪 `002` + 港股通深 `004`）。`NET_DEAL_AMT` 为当日净流入，单位百万元，工具已换算成**人民币亿元**（÷100，经内部一致性 `NET=BUY-SELL` 交叉验证定标）。
+
+> 为何不用项目现成的 tushare：`.env` 的自建镜像对 A股接口真实，但对 `moneyflow_hsgt`(南向) 返回固定 ~543 亿的**占位假数据**（与东财真实值 5~205 亿的波动完全不符）；官方 `api.tushare.pro` 又需积分≥2000 的有效 token。故南向以东财为真实源。若后续有官方 token，可加 tushare 作交叉验证。
+
+## 设计原则
+
+- **南向 = 港股通(沪+深)当日净买入**；净流入为正表示净买入港股、为负表示净卖出。
+- **只算总量，不拆个股**：本 skill 聚焦大盘级南向资金强弱，不做十大成交股/单股持股。
+- **单位统一为人民币亿元**；货币口径务必标注"人民币"，勿与港股股价（港币）混淆。
+- **南向≠聪明钱**：可能含被动指数配置、南下抱团情绪、月末/季末效应、单一大额调仓扰动；净流入大不必然等于价值发现。
+- 数据缺失即如实标"数据不足"，不臆造（如最新一日东财偶尔缺持股市值，工具会自动跳过）。
+
+## 执行流程
+
+### 第一步：调用工具取数（输出 JSON）
+
+```bash
+# 默认近 30 个交易日
+python3 tools/southbound_flow.py flow --days 30
+# 任意窗口，如近 100 个交易日
+python3 tools/southbound_flow.py flow --days 100
+# 指定区间
+python3 tools/southbound_flow.py flow --start 20260101 --end 20260709
+```
+
+- 输出 `每日明细`（日期 / 南向净流入 / 买入 / 卖出 / 南向持股市值）+ `总览`（区间累计、日均、净流入/流出天数、最高流入日、最低日、近端连续方向与天数、期初→期末持股市值变化）。
+
+### 第二步：Web 补充与交叉验证
+
+用东方财富网页「沪深港通」板块 / 港交所披露易 / Wind 核对区间内 2-3 天净买入数值（**标注来源与获取日期**），误差 >1% 须说明。补充窗口内驱动事件（政策、指数调整、财报季、AH 溢价、汇率等）解释资金流向。
+
+## 输出格式
+
+```markdown
+# 南向资金总量追踪报告
+
+**日期**：{当天日期}　**窗口**：近 {N} 个交易日（{起}~{止}）　**数据源**：东方财富 + {交叉源}　**单位**：人民币亿元
+
+## 一、南向净流入总览
+- 区间累计净流入：{X} 亿　日均：{Y} 亿
+- 净流入 {a} 天 / 净流出 {b} 天
+- 最高流入日：{日期} {值} 亿　最低日：{日期} {值} 亿
+- 近端连续{净流入/净流出}：{天数} 天
+- 南向持股市值：{期初} → {期末}（变化 {值} 亿）
+
+## 二、每日明细（长窗口按周/月末抽样，完整序列放附录）
+
+| 日期 | 南向净流入 | 买入 | 卖出 |
+|------|-----------|------|------|
+| {YYYY-MM-DD} | {值} | {值} | {值} |
+
+## 三、趋势描述
+{用数据描述窗口内加速/减速/转向、阶段高低点、当前位置；结合交叉验证与事件}
+
+## 四、正反两面
+**持续净流入的支撑**：{数据支撑}
+**但另一方面**：{是否被动指数配置 / 情绪抱团 / 月末季末效应 / 单一大额调仓扰动 / 与恒指走势背离等反面论据}
+
+## 五、结论与评分
+南向资金情绪强度：{★1-5}
+{结论必须从流入数据自然推出，不预设看多/看空}
+
+## 六、数据来源与局限
+- 数据源、交叉验证结果与误差
+- 局限性声明（见下）
+
+## 附录：完整每日序列（长窗口时）
+```
+
+## 输出要求
+
+1. **报告位置**：`qoder_report/南向资金-{YYYYMMDD}.md`（根目录，市场级主题报告）。目录不存在则创建。
+2. **语言**：中文；风格直接、犀利、不说废话。
+3. **数据**：所有数据标注来源；关键数据 2 源交叉验证；估计值标"估计"；货币标"人民币亿元"。
+4. **不预设立场**：先摆流入数据 → 推逻辑 → 出结论；不预设看多/看空。
+5. **正反两面**：净流入必附"是否被动配置/情绪驱动/一次性扰动"的反面论据。
+6. **评分**：用 ★（★1-5，不含半星）。
+7. 穿插巴菲特/芒格/段永平/李录关于"资金 vs 价值""别人贪婪我恐惧"的语录点评。
+
+## 局限性声明（必须写入报告）
+
+- **南向资金≠聪明钱**：含被动指数配置、南下抱团、月末/季末效应、单一大额调仓等噪音，净流入大不必然是价值发现。
+- 净流入反映资金情绪/供求，**不代表估值贵贱**，也不预测股价。
+- 数据存在披露时点与口径差异；工具依赖东方财富公开接口，接口变更或限流会导致取数失败（工具会带上下文报错）。
+- 单位为人民币亿元，注意与港股股价（港币）的币种区分。
+- 最新一个交易日的持股市值东财偶有缺失，工具已自动跳过，不影响净流入序列。
