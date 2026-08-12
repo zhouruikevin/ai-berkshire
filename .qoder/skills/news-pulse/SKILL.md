@@ -3,6 +3,17 @@ name: news-pulse
 description: 公司新闻脉搏：股价异动时快速归因。用 4 个并行 Agent 侦察公司事件/监管政策/行业对手/市场情绪，产出"事件时间线 + 异动主因判断 + 是否触发论文重审"。
 ---
 
+## Qoder adapter note
+
+This skill is generated from `skills/news-pulse.md`. Qoder and Claude Code share one canonical workflow.
+
+- **Tool mapping**: This skill may reference `Task` (background agent), `Team` (multi-agent), or `run_in_background`. In Qoder, use the `Agent` tool for background/sub-agents (with `is_background=true` for Bash) and launch multiple parallel `Agent` calls instead of `Team`.
+- **Permission config**: `.claude/settings.local.json` references do not apply. In Qoder, tool permissions are handled by the IDE; if a tool is blocked, grant it via the IDE's permission prompt.
+- **Project rules**: References to `CLAUDE.md` are for project conventions. Qoder uses `AGENTS.md` and `.qoder/rules/` for the same purpose — follow whichever file is present and scoped to your role.
+- **Placeholders**: `$ARGUMENTS` and `$CURRENT_DATE` work identically in Qoder.
+- **Report output**: Use `qoder_report/` as the output directory (see CLAUDE.md report naming conventions).
+- **Shared tools**: Commands use workspace-relative paths (`python3 tools/...`), run from the repo root.
+
 # 公司新闻脉搏：股价异动快速归因团队
 
 对 $ARGUMENTS 进行最近新闻侦察与异动归因。**这不是深度投研，是情报快速响应**——目标是 10 分钟内回答："这家公司最近发生了什么？股价异动的真因是什么？要不要重审投资论文？"

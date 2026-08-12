@@ -3,6 +3,17 @@ name: management-deep-dive
 description: 管理层纵深研究：买股票就是买人。分析CEO履历、决策记录、资本配置能力、公司治理。
 ---
 
+## Qoder adapter note
+
+This skill is generated from `skills/management-deep-dive.md`. Qoder and Claude Code share one canonical workflow.
+
+- **Tool mapping**: This skill may reference `Task` (background agent), `Team` (multi-agent), or `run_in_background`. In Qoder, use the `Agent` tool for background/sub-agents (with `is_background=true` for Bash) and launch multiple parallel `Agent` calls instead of `Team`.
+- **Permission config**: `.claude/settings.local.json` references do not apply. In Qoder, tool permissions are handled by the IDE; if a tool is blocked, grant it via the IDE's permission prompt.
+- **Project rules**: References to `CLAUDE.md` are for project conventions. Qoder uses `AGENTS.md` and `.qoder/rules/` for the same purpose — follow whichever file is present and scoped to your role.
+- **Placeholders**: `$ARGUMENTS` and `$CURRENT_DATE` work identically in Qoder.
+- **Report output**: Use `qoder_report/` as the output directory (see CLAUDE.md report naming conventions).
+- **Shared tools**: Commands use workspace-relative paths (`python3 tools/...`), run from the repo root.
+
 # 管理层纵深研究：买股票就是买人
 
 对 $ARGUMENTS 进行管理层深度研究。

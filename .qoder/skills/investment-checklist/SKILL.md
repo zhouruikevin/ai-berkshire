@@ -3,6 +3,17 @@ name: investment-checklist
 description: 巴菲特价值投资买入前Checklist。六关检查（能力圈、好生意、护城河、管理层、安全边际、纪律），判断是否值得买入。
 ---
 
+## Qoder adapter note
+
+This skill is generated from `skills/investment-checklist.md`. Qoder and Claude Code share one canonical workflow.
+
+- **Tool mapping**: This skill may reference `Task` (background agent), `Team` (multi-agent), or `run_in_background`. In Qoder, use the `Agent` tool for background/sub-agents (with `is_background=true` for Bash) and launch multiple parallel `Agent` calls instead of `Team`.
+- **Permission config**: `.claude/settings.local.json` references do not apply. In Qoder, tool permissions are handled by the IDE; if a tool is blocked, grant it via the IDE's permission prompt.
+- **Project rules**: References to `CLAUDE.md` are for project conventions. Qoder uses `AGENTS.md` and `.qoder/rules/` for the same purpose — follow whichever file is present and scoped to your role.
+- **Placeholders**: `$ARGUMENTS` and `$CURRENT_DATE` work identically in Qoder.
+- **Report output**: Use `qoder_report/` as the output directory (see CLAUDE.md report naming conventions).
+- **Shared tools**: Commands use workspace-relative paths (`python3 tools/...`), run from the repo root.
+
 # 巴菲特价值投资买入前 Checklist
 
 对 $ARGUMENTS 执行巴菲特价值投资买入前 Checklist 分析。

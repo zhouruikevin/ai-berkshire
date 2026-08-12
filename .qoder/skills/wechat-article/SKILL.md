@@ -3,6 +3,17 @@ name: wechat-article
 description: 微信公众号文章：作者-编辑-读者三Agent协作。产出可直接发布的深度公众号文章。
 ---
 
+## Qoder adapter note
+
+This skill is generated from `skills/wechat-article.md`. Qoder and Claude Code share one canonical workflow.
+
+- **Tool mapping**: This skill may reference `Task` (background agent), `Team` (multi-agent), or `run_in_background`. In Qoder, use the `Agent` tool for background/sub-agents (with `is_background=true` for Bash) and launch multiple parallel `Agent` calls instead of `Team`.
+- **Permission config**: `.claude/settings.local.json` references do not apply. In Qoder, tool permissions are handled by the IDE; if a tool is blocked, grant it via the IDE's permission prompt.
+- **Project rules**: References to `CLAUDE.md` are for project conventions. Qoder uses `AGENTS.md` and `.qoder/rules/` for the same purpose — follow whichever file is present and scoped to your role.
+- **Placeholders**: `$ARGUMENTS` and `$CURRENT_DATE` work identically in Qoder.
+- **Report output**: Use `qoder_report/` as the output directory (see CLAUDE.md report naming conventions).
+- **Shared tools**: Commands use workspace-relative paths (`python3 tools/...`), run from the repo root.
+
 # 微信公众号文章：作者-编辑-读者三Agent协作
 
 对 $ARGUMENTS 进行深度研究，产出一篇可直接发布的微信公众号文章。三个Agent各司其职：作者写深度初稿，编辑精修结构和表达，读者从目标受众视角审读。

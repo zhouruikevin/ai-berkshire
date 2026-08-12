@@ -3,6 +3,17 @@ name: earnings-review
 description: 财报精读：一手资料深度解读。对目标公司财报进行深度分析，解读盈利能力、增长趋势、财务健康度。
 ---
 
+## Qoder adapter note
+
+This skill is generated from `skills/earnings-review.md`. Qoder and Claude Code share one canonical workflow.
+
+- **Tool mapping**: This skill may reference `Task` (background agent), `Team` (multi-agent), or `run_in_background`. In Qoder, use the `Agent` tool for background/sub-agents (with `is_background=true` for Bash) and launch multiple parallel `Agent` calls instead of `Team`.
+- **Permission config**: `.claude/settings.local.json` references do not apply. In Qoder, tool permissions are handled by the IDE; if a tool is blocked, grant it via the IDE's permission prompt.
+- **Project rules**: References to `CLAUDE.md` are for project conventions. Qoder uses `AGENTS.md` and `.qoder/rules/` for the same purpose — follow whichever file is present and scoped to your role.
+- **Placeholders**: `$ARGUMENTS` and `$CURRENT_DATE` work identically in Qoder.
+- **Report output**: Use `qoder_report/` as the output directory (see CLAUDE.md report naming conventions).
+- **Shared tools**: Commands use workspace-relative paths (`python3 tools/...`), run from the repo root.
+
 # 财报精读：一手资料深度解读
 
 对 $ARGUMENTS 进行财报精读分析。
@@ -43,7 +54,7 @@ description: 财报精读：一手资料深度解读。对目标公司财报进�
 3. **管理层致股东信**（如有年报）：完整阅读
 4. **投资者日/分析师日材料**（如近期有）
 
-如果无法获取完整原文，按 `skills/financial-data.md` 规范使用标准数据源拼凑（美股：macrotrends+stockanalysis；港股：aastocks+macrotrends；A股：东方财富+巨潮资讯），但必须标注"非原始财报，来自第三方汇总"，且关键数据两源误差>1%须标记。
+如果无法获取完整原文，按 `skills/financial-data.md` 规范使用标准数据源拼凑（美股：macrotrends+stockanalysis；港股：aastocks+macrotrends；A股：东方财富+巨潮资讯；台股：FinMind `tools/twstock_data.py`+Goodinfo），但必须标注"非原始财报，来自第三方汇总"，且关键数据两源误差>1%须标记。
 
 ### 第二步：核心财务数据提取与验证
 

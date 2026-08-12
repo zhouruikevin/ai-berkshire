@@ -3,6 +3,17 @@ name: private-company-research
 description: 未上市公司深度研究：多Agent并行。专为蚂蚁、小红书、SpaceX、Stripe等非上市公司设计。
 ---
 
+## Qoder adapter note
+
+This skill is generated from `skills/private-company-research.md`. Qoder and Claude Code share one canonical workflow.
+
+- **Tool mapping**: This skill may reference `Task` (background agent), `Team` (multi-agent), or `run_in_background`. In Qoder, use the `Agent` tool for background/sub-agents (with `is_background=true` for Bash) and launch multiple parallel `Agent` calls instead of `Team`.
+- **Permission config**: `.claude/settings.local.json` references do not apply. In Qoder, tool permissions are handled by the IDE; if a tool is blocked, grant it via the IDE's permission prompt.
+- **Project rules**: References to `CLAUDE.md` are for project conventions. Qoder uses `AGENTS.md` and `.qoder/rules/` for the same purpose — follow whichever file is present and scoped to your role.
+- **Placeholders**: `$ARGUMENTS` and `$CURRENT_DATE` work identically in Qoder.
+- **Report output**: Use `qoder_report/` as the output directory (see CLAUDE.md report naming conventions).
+- **Shared tools**: Commands use workspace-relative paths (`python3 tools/...`), run from the repo root.
+
 # 未上市公司研究：多Agent并行深度研究框架
 
 对 $ARGUMENTS 进行团队化深度研究分析。专为蚂蚁集团、小红书、SpaceX、Stripe 等未上市公司设计。

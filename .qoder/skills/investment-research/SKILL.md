@@ -3,6 +3,17 @@ name: investment-research
 description: 系统化投资研究：巴菲特-芒格-段永平-李录四大师综合分析。对目标公司进行商业模式、财务、估值、行业竞争的系统研究。
 ---
 
+## Qoder adapter note
+
+This skill is generated from `skills/investment-research.md`. Qoder and Claude Code share one canonical workflow.
+
+- **Tool mapping**: This skill may reference `Task` (background agent), `Team` (multi-agent), or `run_in_background`. In Qoder, use the `Agent` tool for background/sub-agents (with `is_background=true` for Bash) and launch multiple parallel `Agent` calls instead of `Team`.
+- **Permission config**: `.claude/settings.local.json` references do not apply. In Qoder, tool permissions are handled by the IDE; if a tool is blocked, grant it via the IDE's permission prompt.
+- **Project rules**: References to `CLAUDE.md` are for project conventions. Qoder uses `AGENTS.md` and `.qoder/rules/` for the same purpose — follow whichever file is present and scoped to your role.
+- **Placeholders**: `$ARGUMENTS` and `$CURRENT_DATE` work identically in Qoder.
+- **Report output**: Use `qoder_report/` as the output directory (see CLAUDE.md report naming conventions).
+- **Shared tools**: Commands use workspace-relative paths (`python3 tools/...`), run from the repo root.
+
 # 投资研究：巴菲特-芒格-段永平-李录 四大师综合分析框架
 
 对 $ARGUMENTS 进行系统化投资研究分析。

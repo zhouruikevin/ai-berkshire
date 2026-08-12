@@ -3,9 +3,9 @@
 
 `skills/*.md` is the single source of truth for all platforms. This mirrors
 each skill into `.qoder/skills/<name>/SKILL.md` with the frontmatter Qoder
-requires (`name` + `description`). Unlike the Codex adapter, no adapter note
-is injected — Qoder loads project-level skills directly and consumes the
-workflow text as-is.
+requires (`name` + `description`) and injects a Qoder adapter note that
+maps Claude Code-specific tool references (Task, Team, run_in_background)
+to their Qoder equivalents.
 """
 
 from __future__ import annotations
@@ -44,7 +44,33 @@ def field_value(frontmatter: str, field: str) -> str | None:
     return value or None
 
 
-def build(name: str, source_text: str) -> str:
+def qoder_body(name: str, source_name: str, source_text: str) -> str:
+    _, body = split_frontmatter(source_text)
+    note = (
+        "## Qoder adapter note\n\n"
+        f"This skill is generated from `skills/{source_name}`. Qoder and "
+        "Claude Code share one canonical workflow.\n\n"
+        "- **Tool mapping**: This skill may reference `Task` (background agent), "
+        "`Team` (multi-agent), or `run_in_background`. In Qoder, use the `Agent` "
+        "tool for background/sub-agents (with `is_background=true` for Bash) and "
+        "launch multiple parallel `Agent` calls instead of `Team`.\n"
+        "- **Permission config**: `.claude/settings.local.json` references do "
+        "not apply. In Qoder, tool permissions are handled by the IDE; if a tool "
+        "is blocked, grant it via the IDE\'s permission prompt.\n"
+        "- **Project rules**: References to `CLAUDE.md` are for project "
+        "conventions. Qoder uses `AGENTS.md` and `.qoder/rules/` for the same "
+        "purpose \u2014 follow whichever file is present and scoped to your role.\n"
+        "- **Placeholders**: `$ARGUMENTS` and `$CURRENT_DATE` work identically "
+        "in Qoder.\n"
+        "- **Report output**: Use `qoder_report/` as the output directory (see "
+        "CLAUDE.md report naming conventions).\n"
+        "- **Shared tools**: Commands use workspace-relative paths (`python3 "
+        "tools/...`), run from the repo root.\n\n"
+    )
+    return note + body.rstrip() + "\n"
+
+
+def build(name: str, source_name: str, source_text: str) -> str:
     frontmatter, body = split_frontmatter(source_text)
     skill_name = field_value(frontmatter, "name") if frontmatter else None
     description = field_value(frontmatter, "description") if frontmatter else None
@@ -52,8 +78,9 @@ def build(name: str, source_text: str) -> str:
         skill_name = name
     if not description:
         title = first_heading(body, name)
-        description = f"AI Berkshire 投研技能：{title}。来源 skills/{name}.md。"
-    return f"---\nname: {skill_name}\ndescription: {description}\n---\n\n{body.rstrip()}\n"
+        description = f"AI Berkshire \u6295\u7814\u6280\u80fd\uff1a{title}\u3002\u6765\u6e90 skills/{name}.md\u3002"
+    body_qoder = qoder_body(name, source_name, source_text)
+    return f"---\nname: {skill_name}\ndescription: {description}\n---\n\n{body_qoder.rstrip()}\n"
 
 
 def main() -> None:
@@ -66,7 +93,7 @@ def main() -> None:
     stale: list[str] = []
     for source in sorted(CLAUDE_SKILLS.glob("*.md")):
         name = source.stem
-        content = build(name, source.read_text(encoding="utf-8"))
+        content = build(name, source.name, source.read_text(encoding="utf-8"))
         target = QODER_SKILLS / name / "SKILL.md"
         if check:
             if not target.exists() or target.read_text(encoding="utf-8") != content:

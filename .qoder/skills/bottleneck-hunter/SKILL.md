@@ -3,6 +3,17 @@ name: bottleneck-hunter
 description: 供应链瓶颈猎手：AI驱动的全球产业链瓶颈套利。从物理供应链咽喉位置寻找被低估的第二层、第三层瓶颈公司，挖掘套利机会。
 ---
 
+## Qoder adapter note
+
+This skill is generated from `skills/bottleneck-hunter.md`. Qoder and Claude Code share one canonical workflow.
+
+- **Tool mapping**: This skill may reference `Task` (background agent), `Team` (multi-agent), or `run_in_background`. In Qoder, use the `Agent` tool for background/sub-agents (with `is_background=true` for Bash) and launch multiple parallel `Agent` calls instead of `Team`.
+- **Permission config**: `.claude/settings.local.json` references do not apply. In Qoder, tool permissions are handled by the IDE; if a tool is blocked, grant it via the IDE's permission prompt.
+- **Project rules**: References to `CLAUDE.md` are for project conventions. Qoder uses `AGENTS.md` and `.qoder/rules/` for the same purpose — follow whichever file is present and scoped to your role.
+- **Placeholders**: `$ARGUMENTS` and `$CURRENT_DATE` work identically in Qoder.
+- **Report output**: Use `qoder_report/` as the output directory (see CLAUDE.md report naming conventions).
+- **Shared tools**: Commands use workspace-relative paths (`python3 tools/...`), run from the repo root.
+
 # 供应链瓶颈猎手：AI驱动的全球产业链瓶颈套利
 
 对 $ARGUMENTS 超级趋势执行供应链瓶颈扫描与套利机会挖掘。
@@ -204,6 +215,8 @@ B级瓶颈（有压力）：
 对每家标的回答："以当前市值买入，假设最乐观情景全部兑现，10年后以25x PE退出，年化回报是多少？" 年化回报<10%→标注"当前价格不具备安全边际"。
 
 **注意**：估值检查的目的是防止推荐"PS 100倍的亏损公司"这种明显错误，而不是排除所有高估值早期公司。关键是增速、TAM、竞争格局能否支撑当前估值，需要具体分析而非一刀切。
+
+**台股标的取数**：供应链扫描常命中台股（4位数字代码，如 2330、3661），其行情/PER/市值/月营收统一用 `python3 tools/twstock_data.py`（FinMind 数据源，用法见 `skills/financial-data.md` 台股章节）。台股每月10日前强制披露上月营收，月营收同比是验证瓶颈"量价齐升"最快的公开信号。
 
 ### 4.3 深度筛选维度
 
