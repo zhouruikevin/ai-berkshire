@@ -21,7 +21,9 @@ for code in sys.argv[1:]:
     except Exception as e:
         print(f"{code}: 取数失败 {e}")
         continue
-    pe, pb = d.get("PE_TTM", {}), d.get("PB", {})
+    pe, pb = d.get("PE_TTM") or {}, d.get("PB") or {}
+    pe = {"当前": pe.get("当前") or {}, "历史分布": pe.get("历史分布") or {}}
+    pb = {"当前": pb.get("当前") or {}, "历史分布": pb.get("历史分布") or {}}
     s = d.get("周频历史序列", [])
     peak_pb = max(s, key=lambda r: r.get("pb") or 0) if s else {}
     print(f"\n===== {code} =====")
