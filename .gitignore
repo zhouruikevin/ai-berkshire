@@ -45,3 +45,6 @@ __pycache__/
 # 本地 Agent 工具数据（记忆/项目级技能）与 seecode 项目配置
 .workbuddy/
 .seecode/
+
+# 懂车帝研究：涉及个人任职关系，只留本地（原目录已迁到 local/懂车帝/）
+/reports/懂车帝/
