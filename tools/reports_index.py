@@ -320,22 +320,41 @@ def render(items, cfg):
 ROOT_README = os.path.join(ROOT, "README.md")
 MARK_START = "<!-- REPORTS-INDEX:START 由 tools/reports_index.py 自动更新，勿手改 -->"
 MARK_END = "<!-- REPORTS-INDEX:END -->"
+BANNER_START = "<!-- REPORTS-BANNER:START 由 tools/reports_index.py 自动更新，勿手改 -->"
+BANNER_END = "<!-- REPORTS-BANNER:END -->"
+
+
+def index_stats(items):
+    groups = defaultdict(set)
+    for it in items:
+        if it["bucket"] != "筛选池":
+            groups[it["bucket"]].add(it["group"])
+    latest = max((i["date"] for i in items if i["date"]), default="—")
+    return len(items), len(groups["公司"]), len(groups["专题"]), latest
+
+
+def root_banner_block(items):
+    """首屏横幅：仓库日更内容的入口，位置在标题区，不在正文深处。"""
+    total, companies, themes, latest = index_stats(items)
+    return "\n".join([
+        BANNER_START,
+        "",
+        "> 📊 **日更内容是研究报告，全部在 [研究报告索引](reports/README.md)。** "
+        "%d 份报告 · %d 家公司 · %d 个专题，按公司与专题分组，更新至 %s。"
+        % (total, companies, themes, latest),
+        "",
+        BANNER_END,
+    ])
 
 
 def root_readme_block(items):
     """生成根 README 里的『研究索引』入口块。"""
-    groups = defaultdict(list)
-    for it in items:
-        if it["bucket"] != "筛选池":
-            groups[it["bucket"]].append(it)
-    companies = len({i["group"] for i in groups["公司"]})
-    themes = len({i["group"] for i in groups["专题"]})
-    latest = max((i["date"] for i in items if i["date"]), default="—")
+    total, companies, themes, latest = index_stats(items)
     fresh = [i for i in items if i["bucket"] != "筛选池" and i["type"] != "底稿"][:8]
 
     L = [MARK_START, ""]
     L.append("**📊 [全部研究索引 →](reports/README.md)** ｜ %d 份报告 · %d 家公司 · %d 个专题 · 更新至 %s"
-             % (len(items), companies, themes, latest))
+             % (total, companies, themes, latest))
     L.append("")
     L.append("最近更新：")
     L.append("")
@@ -363,11 +382,16 @@ def update_root_readme(items):
     if not os.path.exists(ROOT_README):
         return None, None
     old = open(ROOT_README, encoding="utf-8").read()
-    if MARK_START not in old or MARK_END not in old:
-        return old, old
-    head = old.split(MARK_START)[0]
-    tail = old.split(MARK_END, 1)[1]
-    return old, head + root_readme_block(items) + tail
+    new = old
+    for start, end, builder in (
+        (BANNER_START, BANNER_END, root_banner_block),
+        (MARK_START, MARK_END, root_readme_block),
+    ):
+        if start in new and end in new:
+            head = new.split(start)[0]
+            tail = new.split(end, 1)[1]
+            new = head + builder(items) + tail
+    return old, new
 
 
 def main():
