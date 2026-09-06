@@ -1,5 +1,5 @@
 {
-  "count": 2326,
+  "count": 2328,
   "reports": [
     {
       "title": "贵州茅台护城河、文化、需求与十年利润研究报告",
@@ -7,6 +7,28 @@
       "bucket": "公司",
       "group": "茅台",
       "series": "",
+      "type": "研究",
+      "date": "2026-09-07",
+      "date_source": "文件名",
+      "ticker": ""
+    },
+    {
+      "title": "英伟达（NVDA）商业模式与十年利润研究",
+      "path": "reports/英伟达/英伟达商业模式与十年利润研究-20260907.md",
+      "bucket": "公司",
+      "group": "英伟达",
+      "series": "",
+      "type": "研究",
+      "date": "2026-09-07",
+      "date_source": "文件名",
+      "ticker": ""
+    },
+    {
+      "title": "审计说明",
+      "path": "reports/英伟达/商业模式与十年利润-20260907/audit-notes.md",
+      "bucket": "公司",
+      "group": "英伟达",
+      "series": "商业模式与十年利润-20260907",
       "type": "研究",
       "date": "2026-09-07",
       "date_source": "文件名",
