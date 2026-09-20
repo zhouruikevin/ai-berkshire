@@ -1,6 +1,28 @@
 {
-  "count": 2349,
+  "count": 2351,
   "reports": [
+    {
+      "title": "一个不说话的模型，六天里被测出了什么：拆 Jev",
+      "path": "reports/AI产业研究/公众号-Jev-一个不说话的模型六天里被测出了什么-20260921.md",
+      "bucket": "专题",
+      "group": "AI产业研究",
+      "series": "",
+      "type": "公众号",
+      "date": "2026-09-21",
+      "date_source": "文件名",
+      "ticker": ""
+    },
+    {
+      "title": "Jev 与\"决策模型\"品类：技术报告、商业评估与未来三年影响",
+      "path": "reports/AI产业研究/Jev与决策模型品类-技术报告与商业评估-20260921.md",
+      "bucket": "专题",
+      "group": "AI产业研究",
+      "series": "",
+      "type": "研究",
+      "date": "2026-09-21",
+      "date_source": "文件名",
+      "ticker": ""
+    },
     {
       "title": "曾鸣最新访谈：现在连浏览器都还没出现，模型公司不是终局赢家",
       "path": "reports/曾鸣/曾鸣-公众号-20260920.md",
