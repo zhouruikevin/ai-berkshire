@@ -1,6 +1,17 @@
 {
-  "count": 2351,
+  "count": 2352,
   "reports": [
+    {
+      "title": "快手与 MiniMax：护城河与五年盈利推演",
+      "path": "reports/快手与MiniMax-护城河与五年盈利推演-20260922.md",
+      "bucket": "专题",
+      "group": "综合与横评",
+      "series": "",
+      "type": "研究",
+      "date": "2026-09-22",
+      "date_source": "文件名",
+      "ticker": ""
+    },
     {
       "title": "一个不说话的模型，六天里被测出了什么：拆 Jev",
       "path": "reports/AI产业研究/公众号-Jev-一个不说话的模型六天里被测出了什么-20260921.md",
