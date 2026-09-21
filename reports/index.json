@@ -1,5 +1,5 @@
 {
-  "count": 2352,
+  "count": 2354,
   "reports": [
     {
       "title": "快手与 MiniMax：护城河与五年盈利推演",
@@ -8,6 +8,28 @@
       "group": "综合与横评",
       "series": "",
       "type": "研究",
+      "date": "2026-09-22",
+      "date_source": "文件名",
+      "ticker": ""
+    },
+    {
+      "title": "不动权重的训练：文本空间优化两年演进——从 TextGrad 到技能自进化，再到运行框架与模型协同进化",
+      "path": "reports/AI产业研究/文本空间优化-从TextGrad到技能与运行框架协同进化-技术报告-20260922.md",
+      "bucket": "专题",
+      "group": "AI产业研究",
+      "series": "",
+      "type": "研究",
+      "date": "2026-09-22",
+      "date_source": "文件名",
+      "ticker": ""
+    },
+    {
+      "title": "大模型请了更强的老师，成功率从 78% 掉到 63%",
+      "path": "reports/AI产业研究/公众号-不动权重的训练-老师更强学生反而掉15分-20260922.md",
+      "bucket": "专题",
+      "group": "AI产业研究",
+      "series": "",
+      "type": "公众号",
       "date": "2026-09-22",
       "date_source": "文件名",
       "ticker": ""
