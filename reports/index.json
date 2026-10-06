@@ -1,6 +1,215 @@
 {
-  "count": 2377,
+  "count": 2399,
   "reports": [
+    {
+      "title": "李录演讲与访谈合集",
+      "path": "reports/李录/李录演讲与访谈合集.md",
+      "bucket": "大师研究",
+      "group": "李录",
+      "series": "",
+      "type": "研究",
+      "date": "2026-10-07",
+      "date_source": "git",
+      "ticker": ""
+    },
+    {
+      "title": "李录：哥大商学院第36届格雷厄姆与多德年度论坛对谈实录（2026-10-05）",
+      "path": "reports/李录/李录-哥大格雷厄姆多德论坛对谈实录-20261005.md",
+      "bucket": "大师研究",
+      "group": "李录",
+      "series": "",
+      "type": "研究",
+      "date": "2026-10-05",
+      "date_source": "文件名",
+      "ticker": ""
+    },
+    {
+      "title": "贵州茅台（600519.SH）研究报告",
+      "path": "reports/七公司投资研究-20261002/茅台/茅台研究报告-20261002.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "茅台",
+      "type": "研究",
+      "date": "2026-10-02",
+      "date_source": "文件名",
+      "ticker": ""
+    },
+    {
+      "title": "茅台核查边界",
+      "path": "reports/七公司投资研究-20261002/茅台/audit-notes.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "茅台",
+      "type": "研究",
+      "date": "2026-10-02",
+      "date_source": "正文",
+      "ticker": ""
+    },
+    {
+      "title": "腾讯（0700.HK）研究报告",
+      "path": "reports/七公司投资研究-20261002/腾讯/腾讯研究报告-20261002.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "腾讯",
+      "type": "研究",
+      "date": "2026-10-02",
+      "date_source": "文件名",
+      "ticker": ""
+    },
+    {
+      "title": "审计边界与复算记录",
+      "path": "reports/七公司投资研究-20261002/腾讯/审计说明.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "腾讯",
+      "type": "底稿",
+      "date": "2026-10-02",
+      "date_source": "正文",
+      "ticker": ""
+    },
+    {
+      "title": "美团（03690.HK）研究报告",
+      "path": "reports/七公司投资研究-20261002/美团/美团研究报告-20261002.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "美团",
+      "type": "研究",
+      "date": "2026-10-02",
+      "date_source": "文件名",
+      "ticker": ""
+    },
+    {
+      "title": "来源登记",
+      "path": "reports/七公司投资研究-20261002/泡泡玛特/证据/来源登记.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "泡泡玛特",
+      "type": "研究",
+      "date": "2026-10-02",
+      "date_source": "正文",
+      "ticker": ""
+    },
+    {
+      "title": "泡泡玛特（9992.HK）研究报告",
+      "path": "reports/七公司投资研究-20261002/泡泡玛特/泡泡玛特研究报告-20261002.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "泡泡玛特",
+      "type": "研究",
+      "date": "2026-10-02",
+      "date_source": "文件名",
+      "ticker": ""
+    },
+    {
+      "title": "泡泡玛特研究核验状态",
+      "path": "reports/七公司投资研究-20261002/泡泡玛特/审计状态.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "泡泡玛特",
+      "type": "底稿",
+      "date": "2026-10-02",
+      "date_source": "正文",
+      "ticker": ""
+    },
+    {
+      "title": "泡泡玛特历史现金流补核",
+      "path": "reports/七公司投资研究-20261002/泡泡玛特/历史现金流补核.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "泡泡玛特",
+      "type": "研究",
+      "date": "2026-10-02",
+      "date_source": "正文",
+      "ticker": ""
+    },
+    {
+      "title": "七公司研究交付与核查记录",
+      "path": "reports/七公司投资研究-20261002/核查记录.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "",
+      "type": "研究",
+      "date": "2026-10-02",
+      "date_source": "文件名",
+      "ticker": ""
+    },
+    {
+      "title": "拼多多（PDD）研究报告",
+      "path": "reports/七公司投资研究-20261002/拼多多/拼多多研究报告-20261002.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "拼多多",
+      "type": "研究",
+      "date": "2026-10-02",
+      "date_source": "文件名",
+      "ticker": ""
+    },
+    {
+      "title": "审计边界与复算记录",
+      "path": "reports/七公司投资研究-20261002/拼多多/审计说明.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "拼多多",
+      "type": "底稿",
+      "date": "2026-10-02",
+      "date_source": "正文",
+      "ticker": ""
+    },
+    {
+      "title": "快手（01024.HK）研究报告",
+      "path": "reports/七公司投资研究-20261002/快手/快手研究报告-20261002.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "快手",
+      "type": "研究",
+      "date": "2026-10-02",
+      "date_source": "文件名",
+      "ticker": ""
+    },
+    {
+      "title": "七公司投资研究：横向总览",
+      "path": "reports/七公司投资研究-20261002/七公司研究总览-20261002.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "",
+      "type": "研究",
+      "date": "2026-10-02",
+      "date_source": "文件名",
+      "ticker": ""
+    },
+    {
+      "title": "来源登记",
+      "path": "reports/七公司投资研究-20261002/MiniMax/证据/来源登记.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "MiniMax",
+      "type": "研究",
+      "date": "2026-10-02",
+      "date_source": "正文",
+      "ticker": ""
+    },
+    {
+      "title": "MiniMax研究核验状态",
+      "path": "reports/七公司投资研究-20261002/MiniMax/审计状态.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "MiniMax",
+      "type": "底稿",
+      "date": "2026-10-02",
+      "date_source": "正文",
+      "ticker": ""
+    },
+    {
+      "title": "MiniMax（0100.HK）研究报告",
+      "path": "reports/七公司投资研究-20261002/MiniMax/MiniMax研究报告-20261002.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "MiniMax",
+      "type": "研究",
+      "date": "2026-10-02",
+      "date_source": "文件名",
+      "ticker": ""
+    },
     {
       "title": "除了你自己，没人关心你的成本价",
       "path": "reports/公众号-除了你自己没人关心你的成本价-20260928.md",
@@ -255,7 +464,7 @@
       "ticker": ""
     },
     {
-      "title": "大模型请了更强的老师，成功率从 78% 掉到 63%",
+      "title": "harness 自进化的几篇论文",
       "path": "reports/AI产业研究/公众号-不动权重的训练-老师更强学生反而掉15分-20260922.md",
       "bucket": "专题",
       "group": "AI产业研究",
@@ -25643,17 +25852,6 @@
       "ticker": ""
     },
     {
-      "title": "李录演讲与访谈合集",
-      "path": "reports/李录/李录演讲与访谈合集.md",
-      "bucket": "大师研究",
-      "group": "李录",
-      "series": "",
-      "type": "研究",
-      "date": "2026-04-09",
-      "date_source": "git",
-      "ticker": ""
-    },
-    {
       "title": "李录投资收益记录",
       "path": "reports/李录/李录投资收益记录.md",
       "bucket": "大师研究",
@@ -26144,6 +26342,50 @@
       "group": "持仓现金流质量检查-20260907",
       "series": "快手美团证据",
       "type": "研究",
+      "date": "",
+      "date_source": "缺失",
+      "ticker": ""
+    },
+    {
+      "title": "财务表",
+      "path": "reports/七公司投资研究-20261002/腾讯/财务表.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "腾讯",
+      "type": "研究",
+      "date": "",
+      "date_source": "缺失",
+      "ticker": ""
+    },
+    {
+      "title": "美团研究报告审计说明",
+      "path": "reports/七公司投资研究-20261002/美团/审计说明.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "美团",
+      "type": "底稿",
+      "date": "",
+      "date_source": "缺失",
+      "ticker": ""
+    },
+    {
+      "title": "财务表",
+      "path": "reports/七公司投资研究-20261002/拼多多/财务表.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "拼多多",
+      "type": "研究",
+      "date": "",
+      "date_source": "缺失",
+      "ticker": ""
+    },
+    {
+      "title": "快手研究报告审计说明",
+      "path": "reports/七公司投资研究-20261002/快手/审计说明.md",
+      "bucket": "公司",
+      "group": "七公司投资研究-20261002",
+      "series": "快手",
+      "type": "底稿",
       "date": "",
       "date_source": "缺失",
       "ticker": ""
