@@ -1,0 +1,31 @@
+# ===== Graphify 扫描白名单（等价 raw/ 隔离） =====
+# 默认全部排除，白名单圈定核心输入：代码 + 技能工作流 + 顶层文档
+# 说明：语法同 .gitignore（含 ! 负向）；.gitignore 已排除的内容（.env/.idea/ 等）自动叠加生效
+*
+
+# 代码与脚本（本地 AST 抽取）
+!tools/
+!tools/**
+!scripts/
+!scripts/**
+!tests/
+!tests/**
+
+# 技能工作流源文件（语义抽取）
+!skills/
+!skills/**
+
+# 文档：仅 docs 顶层 md（docs/个人笔记/ 等子目录天然排除）
+!docs/
+!docs/*.md
+
+# 仓库级说明文件
+!AGENTS.md
+!CLAUDE.md
+!ai_CLAUDE.md
+!README.md
+
+# ===== 保险性显式排除：机器产物不回扫，密钥永不入图 =====
+graphify-out/
+.git/
+.env

@@ -42,6 +42,9 @@ reports/portfolio-latest.md
 __pycache__/
 *.pyc
 
+# Graphify 知识图谱机器产物，不入库
+graphify-out/
+
 # 本地 Agent 工具数据（记忆/项目级技能）与 seecode 项目配置
 .workbuddy/
 .seecode/
