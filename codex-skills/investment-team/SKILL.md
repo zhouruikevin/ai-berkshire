@@ -45,12 +45,6 @@ This skill is generated from `skills/investment-team.md` so Claude Code and Code
 
 将评级结果告知每个Agent，影响其研究方式。
 
-### 日期锚定（强制执行）
-
-当前日期为 `$CURRENT_DATE`。**每个Agent的任务描述中必须包含以下指令**：
-
-> 研究日期：`$CURRENT_DATE`。所有数据必须是截至此日期的最新可得数据。"最近财年"=截至今日已披露的最近完整财年，"近5年"从最近完整财年往回推。搜索query中必须包含当前年份。股价/市值取最近交易日数据并标注日期。
-
 ### 第一步¾：WebSearch 权限预检（关键 · 避免 Agent 静默退化）
 
 在创建团队、启动任何后台 Agent **之前**，必须先确认 WebSearch 权限已放行。

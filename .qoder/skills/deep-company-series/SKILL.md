@@ -1,6 +1,6 @@
 ---
 name: deep-company-series
-description: 深度公司系列：8篇长文拆一家公司。为公众号/视频号撰写公司深度分析系列，核心是事实核查标准。
+description: 看懂XX公司（深度公司系列）：3-8 篇长文拆一家公司。为公众号/视频号撰写公司深度分析系列，核心是事实核查标准。
 ---
 
 ## Qoder adapter note
@@ -14,7 +14,7 @@ This skill is generated from `skills/deep-company-series.md`. Qoder and Claude C
 - **Report output**: Use `qoder_report/` as the output directory (see CLAUDE.md report naming conventions).
 - **Shared tools**: Commands use workspace-relative paths (`python3 tools/...`), run from the repo root.
 
-# 深度公司系列：8 篇长文拆一家公司
+# 看懂XX公司（深度公司系列）：3-8 篇长文拆一家公司
 
 为 $ARGUMENTS 撰写一个《看懂XX》深度长文系列（3-8 篇，按公司复杂度定，见"篇数适配"），发布在公众号/视频号等公开渠道。**核心 IP 不是"会写"，而是"会改"——99% 的财经文章在违反本 skill 的事实核查标准**。
 

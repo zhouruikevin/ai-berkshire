@@ -1,6 +1,6 @@
 ---
 name: deep-company-series
-description: 深度公司系列：8篇长文拆一家公司。为公众号/视频号撰写公司深度分析系列，核心是事实核查标准。
+description: 看懂XX公司（深度公司系列）：3-8 篇长文拆一家公司。为公众号/视频号撰写公司深度分析系列，核心是事实核查标准。
 ---
 
 ## Codex adapter note
@@ -169,7 +169,6 @@ This skill is generated from `skills/deep-company-series.md` so Claude Code and 
 ### 阶段 2：写作（按 01→末篇顺序写，不跳）
 
 - 每篇写完先存 `qoder_report/{公司名}/《看懂{公司名}》/0X-XX.md`
-- **目录冲突规则**：若 `qoder_report/{公司名}/《看懂{公司名}》/` 已存在（旧版系列），不覆盖、不混放——新系列写入带日期后缀的新文件夹 `qoder_report/{公司名}/《看懂{公司名}》-{YYYYMMDD}/`，旧文件夹原样保留
 - 不立即推 GitHub——等用户审阅
 - 用户提修订意见后修改
 - 修订完才 git push

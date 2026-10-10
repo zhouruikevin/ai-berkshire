@@ -1,6 +1,6 @@
 ---
 name: income-investment
-description: AI Berkshire 投研技能：Income Investment: Durable and Opportunistic Distribution Analysis。来源 skills/income-investment.md。
+description: 收益投资分析：评估公司能否产生持久且有吸引力的可分配收入，判断其是否值得作为长期收益核心或机会型收益仓位；高股息率不等于好机会。
 ---
 
 ## Qoder adapter note

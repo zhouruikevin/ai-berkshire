@@ -1,6 +1,6 @@
 ---
 name: thesis-drift
-description: AI Berkshire 投研技能：投资论文漂移检测：分清事实变化与措辞变化。来源 skills/thesis-drift.md。
+description: 投资论文漂移检测：对比新旧论文快照，分清事实变化与措辞变化，及时发现持仓论文的实质性漂移。
 ---
 
 ## Qoder adapter note
