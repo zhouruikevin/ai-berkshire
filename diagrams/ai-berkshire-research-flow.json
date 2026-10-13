@@ -1,0 +1,25 @@
+{
+  "type": "flowchart",
+  "title": "AI Berkshire 投研工作流",
+  "subtitle": "从大师方法论到实盘复利的闭环",
+  "lang": "zh-CN",
+  "motion": "trace",
+  "nodes": [
+    {"id":"s","label":"大师方法论","sub":"巴菲特 · 芒格 · 段永平 · 李录","shape":"terminal","row":0,"col":1},
+    {"id":"a","label":"AI Agent 引擎","sub":"Qoder / Claude Code / Codex","icon":"gear","row":1,"col":1},
+    {"id":"b","label":"公司筛选","sub":"全市场 → 观察池","icon":"document","row":2,"col":1},
+    {"id":"c","label":"深度研究","sub":"多大师视角交叉验证","icon":"star","focal":true,"row":3,"col":1},
+    {"id":"d","label":"跑赢基准?","shape":"decision","row":4,"col":1},
+    {"id":"e","label":"复盘迭代","sub":"归因 · 修正方法论","kind":"muted","icon":"flag","row":5,"col":0},
+    {"id":"f","label":"复利累积","shape":"terminal","icon":"money","row":5,"col":2}
+  ],
+  "edges": [
+    ["s","a","方法论注入"],
+    ["a","b","筛选"],
+    ["b","c","深研"],
+    ["c","d","建仓"],
+    ["d","f","达标","primary"],
+    ["d","e","未达标"],
+    ["e","s","反馈闭环"]
+  ]
+}
