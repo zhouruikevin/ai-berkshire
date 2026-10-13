@@ -41,3 +41,7 @@ reports/portfolio-latest.md
 .playwright-mcp/
 __pycache__/
 *.pyc
+
+# 本地 Agent 工具数据（记忆/项目级技能）与 seecode 项目配置
+.workbuddy/
+.seecode/
